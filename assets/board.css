@@ -1,0 +1,26 @@
+/* Continuous whiteboard: pan/zoom canvas and resizable panel (workspace.js v5). */
+#whiteboard{width:var(--board-w,min(48vw,850px))}
+#whiteboard.board-full{width:auto}
+#whiteboard .board-space{display:block;padding:0;overflow:hidden;background:#fff;position:relative}
+#whiteboard .board-sheet{width:100%;height:100%;aspect-ratio:auto;max-height:none;border:0;box-shadow:none;background:#fff}
+#whiteboard .board-sheet[data-paper]{background-image:none}
+#whiteboard .board-sheet svg{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+#whiteboard .board-sheet svg.wb-move{cursor:grab}
+#whiteboard .board-sheet svg.wb-panning{cursor:grabbing}
+#whiteboard .board-sheet svg.ink-eraser:not(.wb-move){cursor:cell}
+#whiteboard .board-sheet svg path{pointer-events:none}
+#whiteboard .board-zoom{display:inline-flex;align-items:center;border:1px solid #d5dee7;border-radius:8px;overflow:hidden;background:#fff}
+#whiteboard .board-head .board-zoom .control{border:0;border-radius:0;min-width:30px}
+#whiteboard .board-head #board-zoom-label{min-width:52px;font-variant-numeric:tabular-nums;font-weight:650}
+.board-resize{position:absolute;left:0;top:0;bottom:0;width:12px;cursor:ew-resize;z-index:12;touch-action:none}
+.board-resize::after{content:"";position:absolute;left:4px;top:50%;width:4px;height:48px;margin-top:-24px;border-radius:3px;background:#a9bacb;transition:background .15s}
+.board-resize:hover::after,.board-resize:focus-visible::after,.board-resize.dragging::after{background:#006e68}
+.board-resize:focus-visible{outline:none}
+#whiteboard.board-full .board-resize{display:none}
+body.board-resizing,body.board-resizing *{cursor:ew-resize!important;user-select:none!important}
+@media(min-width:851px){
+  body.board-open:not(.board-wide) .lesson-layout{width:calc(100vw - var(--board-w,48vw) - 34px)}
+  body.board-open:not(.board-wide) .class-nav{width:calc(100vw - var(--board-w,48vw) - 16px)}
+}
+@media(max-width:850px){.board-resize{display:none}#whiteboard{width:auto}}
+@media(pointer:coarse){#whiteboard .board-head .board-zoom .control{min-width:38px;min-height:36px}}
