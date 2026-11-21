@@ -8,15 +8,15 @@ practice and revision material. Every lecture has two pages:
 
 - **Study mode** (`lectures/NN-study.html`): self-paced chapters, checks with
   feedback, a mastery test, progress saved in the browser, offline copy.
-- **Teach mode** (`lectures/NN.html`): presentation, pen and whiteboard,
-  exam mode that hides answers, and teacher notes (timings, prompts, expected
-  mistakes, board plan) that are hidden while presenting.
+- **Class view** (`lectures/NN.html`): the lecture as presented, with
+  section-by-section navigation, pen and whiteboard, and an option to hide
+  answers for self-testing.
 
 ## Structure
 
 ```
 index.html            homepage (generated, see below)
-lectures/19.html      Lecture 19, Teach mode
+lectures/19.html      Lecture 19, Class view
 lectures/19-study.html Lecture 19, Study mode
 assets/               shared CSS/JS (labs, ink, study progress, code tabs)
 sw.js                 service worker for the offline lecture pack
@@ -38,8 +38,7 @@ Wrap each language in a `.code-pane` inside a `.code-tabs` block
 `assets/code.js`. The chosen language is remembered across the site. Without
 JavaScript all languages are shown one after another.
 
-## Teacher notes
+## Adding content to Class view
 
-Add `<details class="teacher-note">` as the **last** element of a Teach-mode
-section. Putting new content at the end of a section keeps students' saved
+Add new material at the **end** of a section. This keeps students' saved
 pen annotations aligned with the text above it.

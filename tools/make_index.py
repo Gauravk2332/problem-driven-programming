@@ -75,7 +75,7 @@ def catalog():
                     f'<span class="lesson-code">{num:02d}</span><div class="lesson-body">'
                     f'<strong><a href="{study}">{e(name)}</a></strong><span>{e(topics)}</span></div>'
                     f'<div class="actions"><a class="tag focus" href="{study}">Study</a>'
-                    f'<a class="tag" href="{teach}">Teach</a></div></li>'
+                    f'<a class="tag" href="{teach}">Class view</a></div></li>'
                 )
             else:
                 out.append(
@@ -101,7 +101,7 @@ HERO_SVG = Path(__file__).with_name("hero.svg").read_text().strip()
 
 PAGE = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Problem Driven Programming (R1UC544B): problem-first interactive lectures on algorithms, greedy methods and dynamic programming, with Study and Teach modes.">
+<meta name="description" content="Problem Driven Programming (R1UC544B): problem-first interactive lectures on algorithms, greedy methods and dynamic programming, for self-study and revision.">
 <title>Problem Driven Programming · R1UC544B</title>
 <link rel="stylesheet" href="assets/site.css?v=2"><script src="assets/site.js?v=2" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a>
@@ -113,12 +113,12 @@ PAGE = f"""<!doctype html>
 <h1>Start with a problem.<br>Discover the algorithm.</h1>
 <p>Each lecture opens with a concrete problem you can attempt on paper, lets you find the technique by trying it, and only then states the theory, the code and the complexity. It covers the R1UC544B syllabus from algorithm analysis to dynamic programming.</p>
 <p class="hero-meta">You need: one programming language (C++, Java or Python), arrays, functions and basic recursion.</p>
-<div class="actions"><a class="btn" href="lectures/19-study.html">Study Lecture 19 →</a><a class="btn secondary" href="lectures/19.html">Teach Lecture 19</a></div></div>
+<div class="actions"><a class="btn" href="lectures/19-study.html">Study Lecture 19 →</a><a class="btn secondary" href="lectures/19.html">Lecture 19 class view</a></div></div>
 <div class="visual">{HERO_SVG}<div class="visual-caption">From Lecture 19: the same subproblem, F(3), solved twice.</div></div></div></div>
 <div class="stats"><div class="wrap stat-grid">
 <div class="stat"><strong>{LIVE} of {TOTAL}</strong><span>Lectures published</span></div>
 <div class="stat"><strong>{len(MODULES)}</strong><span>Syllabus modules</span></div>
-<div class="stat"><strong>2</strong><span>Modes per lecture: Study and Teach</span></div></div></div>
+<div class="stat"><strong>2</strong><span>Ways to learn each lecture: Study and Class view</span></div></div></div>
 <div class="wrap">
 <section id="lectures" aria-labelledby="lectures-h"><p class="kicker">01 / Course roadmap</p><h2 id="lectures-h">All 27 lectures</h2>
 <p class="section-intro">Lectures 01–18 follow the existing course outline. Lectures 19–27 group the dynamic programming topics into one sequence. Lectures are published one at a time; anything marked “Coming” has no page yet.</p>
@@ -135,8 +135,8 @@ PAGE = f"""<!doctype html>
 <li class="card"><span class="number">05</span><h3>Practice</h3><p>Graded questions with hints and revealable solutions.</p></li>
 <li class="card"><span class="number">06</span><h3>Revise</h3><p>Glossary, formula sheet and exam-style prompts.</p></li></ol>
 <div class="modes">
-<article class="card"><span class="tag focus">Study mode</span><h3>For students working alone</h3><p>One chapter at a time, quick checks with feedback, a six-question mastery test, progress saved in your browser and an offline copy. No account needed.</p></article>
-<article class="card"><span class="tag">Teach mode</span><h3>For the classroom</h3><p>Section-by-section presentation, pen and whiteboard on top of the slides, an exam mode that hides answers, and collapsible teacher notes with timings that disappear while presenting.</p></article></div></section>
+<article class="card"><span class="tag focus">Study</span><h3>Learn at your own pace</h3><p>One chapter at a time, quick checks with feedback, a six-question mastery test, progress saved in your browser and an offline copy. No account needed.</p></article>
+<article class="card"><span class="tag">Class view</span><h3>Revise what was shown in class</h3><p>The full lecture as presented, one section at a time. Write on it with the pen or whiteboard (saved only in your browser) and hide the answers to test yourself.</p></article></div></section>
 <section id="lab" aria-labelledby="lab-h"><p class="kicker">03 / Try it</p><h2 id="lab-h">Build Fibonacci from stored answers</h2>
 <p class="section-intro">A small sample of the labs inside each lecture. Press Next and predict each value before it appears.</p>
 <div class="card demo"><div><span class="tag focus">From Lecture 19</span><h3 style="margin-top:9px">Reuse the last two answers</h3><p>Start from the base cases F(0) and F(1). Each new value needs only the two values already in the table, so nothing is computed twice. Lecture 20 (coming) turns this into tabulation.</p>
