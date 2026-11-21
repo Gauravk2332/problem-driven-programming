@@ -1,0 +1,25 @@
+/* Code blocks with language tabs (code.js) and teacher notes (Teach mode). */
+.code-tabs{margin:16px 0;border:1px solid #cbd8e3;border-radius:11px;overflow:hidden;background:#0f2236}
+.code-tablist{display:flex;align-items:center;gap:4px;padding:6px 8px;background:#16304a;border-bottom:1px solid #27445f}
+.code-tab{border:0;background:transparent;color:#b9cde0;font:650 13px system-ui,sans-serif;padding:6px 11px;border-radius:7px}
+.code-tab[aria-selected="true"]{background:#9be4d5;color:#123d3b}
+.code-copy{margin-left:auto;border:1px solid #4d6b86;background:transparent;color:#d7e2ef;font:600 12px system-ui,sans-serif;padding:5px 10px;border-radius:7px}
+.code-pane{margin:0}
+.code-pane>.code-label{margin:0;padding:8px 14px 0;color:#9be4d5;font:700 12px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.code-ready .code-pane>.code-label{display:none}
+.code-pane pre{margin:0;padding:14px 16px;overflow-x:auto;color:#e8eff6;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:4}
+.code-pane pre .c{color:#8fb3a9;font-style:italic}
+.code-caption{font-size:14px;color:#52647a;margin:-6px 0 16px}
+.judge-list{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
+.judge-list li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;border:1px solid #dce5eb;background:#fff;border-radius:9px;padding:10px 13px}
+.judge-list a{font-weight:700}
+.judge-list .tag{font-size:11px}
+.judge-list span:last-child{color:#52647a;font-size:14px;flex-basis:100%}
+.teacher-note{margin:22px 0 4px;border:1px dashed #c78219;background:#fff9ef;border-radius:11px;padding:0 14px}
+.teacher-note>summary{padding:11px 2px;cursor:pointer;color:#8a5208;font-weight:750;font-size:14px}
+.teacher-note dl{margin:0 0 12px;display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;font-size:14px}
+.teacher-note dt{font-weight:750;color:#6d4209}
+.teacher-note dd{margin:0}
+.classroom .teacher-note{display:none}
+@media(max-width:620px){.teacher-note dl{grid-template-columns:1fr}.teacher-note dd{margin-bottom:6px}}
+@media print{.code-tablist,.teacher-note{display:none!important}.code-tabs{background:#fff;border-color:#999}.code-pane pre{color:#000;white-space:pre-wrap}.code-pane pre .c{color:#444}}
