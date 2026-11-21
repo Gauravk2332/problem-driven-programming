@@ -16,3 +16,5 @@
 .ink-toolbar .ink-divider{height:25px;width:1px;background:#bbcbd6;margin:0 3px}
 @media(max-width:650px){.ink-toolbar .wrap{gap:6px}.ink-toolbar .control{font-size:13px;padding:6px 9px}.ink-toolbar .ink-divider{display:none}.lesson-top .lesson-toolbar{flex-wrap:wrap}}
 @media print{.ink-toolbar,.ink-layer,.ink-toggle{display:none!important}}
+
+.ink-open .lesson-section{scroll-margin-top:165px}.ink-open .lesson-sidebar{top:165px;max-height:calc(100vh - 180px)}@media(max-width:920px){.ink-open .lesson-section{scroll-margin-top:10px}.ink-open .lesson-sidebar{max-height:none}}
