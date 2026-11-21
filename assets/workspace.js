@@ -147,11 +147,12 @@
     ruledLine = make("path", { d: `M0 ${PAPER_STEP}H${PAPER_STEP}`, fill: "none", stroke: "#d6e0ea" }),
     bgRect = make("rect", { class: "wb-bg", fill: "#ffffff" }),
     paperRect = make("rect", { class: "wb-paper", fill: "none" }),
-    inkRoot = make("g", { class: "wb-ink" });
+    inkRoot = make("g", { class: "wb-ink" }),
+    brush = make("circle", { class: "wb-cursor", r: 0, fill: "none", stroke: "#102b46", visibility: "hidden" });
   gridPat.append(gridLine);
   ruledPat.append(ruledLine);
   defs.append(gridPat, ruledPat);
-  boardSvg.replaceChildren(defs, bgRect, paperRect, inkRoot);
+  boardSvg.replaceChildren(defs, bgRect, paperRect, inkRoot, brush);
   boardSvg.removeAttribute("viewBox");
   const boardState = { layer: boardSvg, root: inkRoot, isBoard: true };
 
@@ -456,6 +457,23 @@
     view = { x: wx - (mid.x - r.left) / z, y: wy - (mid.y - r.top) / z, z };
     applyView();
   }
+  function showBrush(e) {
+    const drawing = opened && !spaceDown && !pan && !gesture && e.pointerType !== "touch" &&
+      ["pen", "highlight", "line", "arrow", "box", "circle"].includes(tool);
+    if (!drawing || !view.z) {
+      brush.setAttribute("visibility", "hidden");
+      return;
+    }
+    const p = point(boardState, e), w = Number(width.value) * (tool === "highlight" ? 4 : 1);
+    brush.setAttribute("cx", p.x);
+    brush.setAttribute("cy", p.y);
+    brush.setAttribute("r", Math.max(w / 2, 1.5) / view.z);
+    brush.setAttribute("fill", color.value);
+    brush.setAttribute("fill-opacity", tool === "highlight" ? 0.35 : 0.9);
+    brush.setAttribute("stroke", "#ffffff");
+    brush.setAttribute("stroke-width", 1.5 / view.z);
+    brush.setAttribute("visibility", "visible");
+  }
   function setPanCursor(on) {
     boardSvg.classList.toggle("wb-panning", on);
   }
@@ -499,6 +517,7 @@
       return;
     }
     move(boardState, e);
+    showBrush(e);
   });
   function boardUp(e) {
     touches.delete(e.pointerId);
@@ -521,7 +540,10 @@
     }
     finish(e);
   });
-  boardSvg.addEventListener("pointerleave", () => boardSvg.querySelector(".laser-dot")?.remove());
+  boardSvg.addEventListener("pointerleave", () => {
+    boardSvg.querySelector(".laser-dot")?.remove();
+    brush.setAttribute("visibility", "hidden");
+  });
   boardSvg.addEventListener("auxclick", (e) => e.button === 1 && e.preventDefault());
   boardSvg.addEventListener("wheel", (e) => {
     e.preventDefault();
@@ -701,6 +723,7 @@
       scale = Math.min(2, 4000 / Math.max(w, h));
     const copy = boardSvg.cloneNode(true);
     copy.querySelector(".laser-dot")?.remove();
+    copy.querySelector(".wb-cursor")?.remove();
     copy.setAttribute("xmlns", ns);
     copy.setAttribute("viewBox", `${x} ${y} ${w} ${h}`);
     copy.setAttribute("width", Math.round(w * scale));

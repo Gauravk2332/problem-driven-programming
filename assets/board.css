@@ -4,10 +4,10 @@
 #whiteboard .board-space{display:block;padding:0;overflow:hidden;background:#fff;position:relative}
 #whiteboard .board-sheet{width:100%;height:100%;aspect-ratio:auto;max-height:none;border:0;box-shadow:none;background:#fff}
 #whiteboard .board-sheet[data-paper]{background-image:none}
-#whiteboard .board-sheet svg{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+#whiteboard .board-sheet svg{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='white' stroke-width='4'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23102b46' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23102b46' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E") 16 16,crosshair}
 #whiteboard .board-sheet svg.wb-move{cursor:grab}
 #whiteboard .board-sheet svg.wb-panning{cursor:grabbing}
-#whiteboard .board-sheet svg.ink-eraser:not(.wb-move){cursor:cell}
+#whiteboard .board-sheet svg.ink-eraser:not(.wb-move){cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='white' fill-opacity='.55' stroke='white' stroke-width='4'/%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='none' stroke='%23b42318' stroke-width='2'/%3E%3C/svg%3E") 16 16,cell}
 #whiteboard .board-sheet svg path{pointer-events:none}
 #whiteboard .board-zoom{display:inline-flex;align-items:center;border:1px solid #d5dee7;border-radius:8px;overflow:hidden;background:#fff}
 #whiteboard .board-head .board-zoom .control{border:0;border-radius:0;min-width:30px}
@@ -24,3 +24,6 @@ body.board-resizing,body.board-resizing *{cursor:ew-resize!important;user-select
 }
 @media(max-width:850px){.board-resize{display:none}#whiteboard{width:auto}}
 @media(pointer:coarse){#whiteboard .board-head .board-zoom .control{min-width:38px;min-height:36px}}
+.ink-layer.ink-active,.ink-layer.ink-active.pen-only,.ink-layer.ink-active.laser-mode{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='white' stroke-width='4'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23102b46' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23102b46' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E") 16 16,crosshair}
+.ink-layer.ink-active.ink-eraser{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='white' fill-opacity='.55' stroke='white' stroke-width='4'/%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='none' stroke='%23b42318' stroke-width='2'/%3E%3C/svg%3E") 16 16,cell}
+#whiteboard .board-sheet svg .wb-cursor{pointer-events:none}
