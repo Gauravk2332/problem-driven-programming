@@ -1,0 +1,18 @@
+/* Private, session-only lecture annotations. */
+.ink-toolbar{border-top:1px solid var(--line);background:#f1f5f9}
+.ink-toolbar[hidden]{display:none!important}
+.ink-toolbar .wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 0}
+.ink-toolbar .control{font-size:14px;padding:7px 12px;min-height:40px}
+.ink-toolbar label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--navy)}
+.ink-toolbar input[type=color]{width:38px;height:36px;border:1px solid #aebfcf;background:white;border-radius:6px;padding:3px;cursor:pointer}
+.ink-toolbar select{font-size:14px;padding:7px;border:1px solid #aebfcf;background:white;border-radius:7px}
+.ink-status{flex-basis:100%;font-size:12px;color:var(--muted);line-height:1.4}
+.lesson-section.ink-section{position:relative;isolation:isolate}
+.ink-layer{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:hidden;border-radius:inherit}
+.ink-layer.ink-active{pointer-events:auto;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+.ink-layer.ink-active.ink-eraser{cursor:cell}
+.ink-layer path{pointer-events:none}
+.ink-toggle[aria-expanded=true]{background:var(--accent);color:white;border-color:var(--accent)}
+.ink-toolbar .ink-divider{height:25px;width:1px;background:#bbcbd6;margin:0 3px}
+@media(max-width:650px){.ink-toolbar .wrap{gap:6px}.ink-toolbar .control{font-size:13px;padding:6px 9px}.ink-toolbar .ink-divider{display:none}.lesson-top .lesson-toolbar{flex-wrap:wrap}}
+@media print{.ink-toolbar,.ink-layer,.ink-toggle{display:none!important}}
