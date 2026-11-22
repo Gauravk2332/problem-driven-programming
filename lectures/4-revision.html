@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 4: Recurrence Relations (R1UC544B).">
+<title>Revision sheet · Lecture 4 · Recurrence Relations</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="4-study.html">← Lecture 4 · Study</a><span><a href="../student.html#lecture-4">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Recurrence Relations · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 4</p></header>
+<div class="cols"><section><h2>Writing a recurrence</h2><p>T(n) = (number of calls) × T(size) + work outside calls; plus a base case.</p><table><thead><tr><th>Algorithm</th><th>Recurrence</th><th>Θ</th></tr></thead><tbody><tr><td>test(n−1)</td><td>T(n−1) + 1</td><td>n</td></tr><tr><td>binary search</td><td>T(n/2) + 1</td><td>log n</td></tr><tr><td>merge sort</td><td>2T(n/2) + n</td><td>n log n</td></tr><tr><td>Hanoi</td><td>2T(n−1) + 1</td><td>2ⁿ</td></tr></tbody></table></section><section><h2>Back substitution</h2><p>T(n−1)+n = n(n+1)/2 (T(10) = 55). 2T(n−1)+1 = 2ⁿ − 1 (T(10) = 1023). T(n/2)+1 = log₂ n + 1.</p></section><section><h2>Recursion tree</h2><p>2T(n/2)+n, n = 16: levels cost 16, 16, 16, 16 + 16 leaves = <b>80</b> = n log₂ n + n.</p></section><section><h2>Master Theorem: T = aT(n/b) + Θ(n^d)</h2><table><thead><tr><th>Compare</th><th>T(n)</th></tr></thead><tbody><tr><td>d &lt; log_b a</td><td>Θ(n^(log_b a)) — leaves</td></tr><tr><td>d = log_b a</td><td>Θ(n^d log n) — even</td></tr><tr><td>d &gt; log_b a</td><td>Θ(n^d) — root</td></tr></tbody></table><p>8T(n/2)+n² → n³; 2T(n/2)+n² → n²; 3T(n/4)+n → n; 7T(n/2)+n² → n^2.81.</p></section><section><h2>Does not apply</h2><p>Decreasing (T(n−1)…), non-constant a, unequal splits, f = n/log n (basic form). Decreasing: a = 1 ⇒ ≈ n·f(n); a &gt; 1 ⇒ exponential.</p></section><section><h2>Common mistakes · full marks</h2><ul><li class="warn">2T(n−1) is exponential; 2T(n/2) is not.</li><li>Count levels: log_b n.</li><li>Expansion finds a pattern; induction proves it.</li></ul><p>Full marks: recurrence with base case, method named, working shown, Θ result.</p></section><section><h2>Two-mark self-test</h2><ol><li>What is a recurrence relation?<br><i>An equation that defines a function in terms of its values on smaller inputs, with one or more base cases; e.g. T(n) = 2T(n/2) + n, T(1) = 1.</i></li><li>Solve T(n) = T(n − 1) + 1, T(0) = 0.<br><i>Back substitution: T(n) = T(0) + n = n = Θ(n).</i></li><li>State the Master Theorem (simplified form).<br><i>For T(n) = aT(n/b) + Θ(n^d): Θ(n^d) if d &gt; log_b a; Θ(n^d log n) if d = log_b a; Θ(n^(log_b a)) if d &lt; log_b a.</i></li><li>Solve T(n) = 2T(n/2) + n by the Master Theorem.<br><i>a = 2, b = 2, d = 1, log₂2 = 1 = d: case 2, Θ(n log n).</i></li><li>Give a recurrence the Master Theorem cannot solve.<br><i>T(n) = T(n − 1) + n (decreasing), or T(n) = 2T(n/2) + n/log n.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 4 · Recurrence Relations</span><span>Revise → practise → implement</span></footer></main></body></html>

@@ -10,7 +10,7 @@ from pathlib import Path
 
 PUBLISHED = {1: ("lectures/1-study.html", None), 2: ("lectures/2-study.html", None), 3: ("lectures/3-study.html", None), 4: ("lectures/4-study.html", None), 5: ("lectures/5-study.html", None), 6: ("lectures/6-study.html", None), 7: ("lectures/7-study.html", None), 8: ("lectures/8-study.html", None), 9: ("lectures/9-study.html", None), 10: ("lectures/10-study.html", None), 11: ("lectures/11-study.html", None), 12: ("lectures/12-study.html", None), 13: ("lectures/13-study.html", None), 14: ("lectures/14-study.html", None), 15: ("lectures/15-study.html", None), 16: ("lectures/16-study.html", None), 17: ("lectures/17-study.html", None), 18: ("lectures/18-study.html", None), 19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html"), 21: ("lectures/21-study.html", "lectures/21.html"), 22: ("lectures/22-study.html", "lectures/22.html"), 23: ("lectures/23-study.html", "lectures/23.html"), 24: ("lectures/24-study.html", "lectures/24.html"), 25: ("lectures/25-study.html", "lectures/25.html"), 26: ("lectures/26-study.html", "lectures/26.html"), 27: ("lectures/27-study.html", "lectures/27.html"), 28: ("lectures/28-study.html", None), 29: ("lectures/29-study.html", None), 30: ("lectures/30-study.html", None)}
 
-REVISION_SHEETS = set(range(12, 28))  # lectures with a printable revision sheet
+REVISION_SHEETS = set(range(1, 28))  # lectures with a printable revision sheet
 
 MODULES = [
     ("Algorithm Foundations", [
@@ -134,7 +134,7 @@ PAGE = f"""<!doctype html>
 <div class="stat"><strong>2</strong><span>Learning modes: Study; Class view where available</span></div></div></div>
 <div class="wrap">
 <section id="lectures" aria-labelledby="lectures-h"><p class="kicker">01 / Course roadmap</p><h2 id="lectures-h">All 27 core + 3 supplementary lectures</h2>
-<p class="section-intro">All 27 core student lectures are available. Lectures 1–11 include revision inside Study mode; Lectures 12–27 have printable revision sheets, and 19–27 also offer Class view. Optional Lectures 28–30 extend DP with grid paths, longest common subsequence and state machines.</p>
+<p class="section-intro">All 27 core student lectures are available. Every core lecture has a Study page and a printable revision sheet; Lectures 19–27 also offer Class view. Optional Lectures 28–30 extend DP with grid paths, longest common subsequence and state machines.</p>
 <div class="filters" id="filters" hidden><label for="search">Search</label><input type="search" id="search" placeholder="knapsack, hashing, complexity…"><label for="module-filter">Module</label><select id="module-filter"><option value="all">All modules</option>{module_options()}</select></div>
 <p class="result-count" id="result-count" aria-live="polite"></p>
 <div id="catalog">{catalog()}</div><p class="empty" id="catalog-empty" hidden>No matching lectures. Try another keyword.</p></section>

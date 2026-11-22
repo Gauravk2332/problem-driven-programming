@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 9: Catalan Numbers (R1UC544B).">
+<title>Revision sheet · Lecture 9 · Catalan Numbers</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="9-study.html">← Lecture 9 · Study</a><span><a href="../student.html#lecture-9">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Catalan Numbers · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 9</p></header>
+<div class="cols"><section><h2>Catalan numbers</h2><div class="f">C₀ = 1, Cₙ = Σ Cᵢ·C(n−1−i)&nbsp;&nbsp; = C(2n, n)/(n + 1)</div><p>1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796.</p></section><section><h2>Derivation</h2><p>Balanced string = ( A ) B, A has i pairs, B has n − 1 − i; independent ⇒ product; sum over i. DP table Θ(n²).</p></section><section><h2>Interpretations (size n)</h2><table><thead><tr><th>Structure</th><th>Count</th></tr></thead><tbody><tr><td>bracket strings, n pairs</td><td>Cₙ</td></tr><tr><td>binary trees / BSTs, n nodes</td><td>Cₙ</td></tr><tr><td>triangulations of (n+2)-gon</td><td>Cₙ</td></tr><tr><td>parenthesisings of n+1 factors</td><td>Cₙ</td></tr><tr><td>paths below diagonal, n×n</td><td>Cₙ</td></tr></tbody></table></section><section><h2>Pigeonhole</h2><p>n + 1 objects in n boxes ⇒ a box with ≥ 2. Generalised: N in k ⇒ ≥ ⌈N/k⌉. 13 people → shared month; 100 students → a month with ≥ 9.</p></section><section><h2>In algorithms</h2><p>Prefix sums mod n ⇒ subarray divisible by n ([3,1,4,1,5]: 1 + 4). More keys than slots ⇒ hash collision. n + 1 values in 1…n ⇒ duplicate.</p></section><section><h2>Common mistakes · full marks</h2><ul><li class="warn">Cₙ ≠ C(2n, n): divide by n + 1.</li><li>(n + 2)-gon, not n-gon.</li><li>Pigeonhole proves existence only.</li></ul><p>Full marks: decomposition → recurrence → values → closed form check → applications.</p></section><section><h2>Two-mark self-test</h2><ol><li>Write the first six Catalan numbers.<br><i>C₀ … C₅ = 1, 1, 2, 5, 14, 42.</i></li><li>State the closed form of Cₙ.<br><i>Cₙ = C(2n, n)/(n + 1).</i></li><li>State the pigeonhole principle.<br><i>If more than n objects are placed in n boxes, at least one box contains two or more objects.</i></li><li>Give two applications of Catalan numbers.<br><i>Balanced bracket strings; binary trees with n nodes; triangulations of an (n + 2)-gon; parenthesising products.</i></li><li>Show that among 13 people two share a birth month.<br><i>13 people (objects), 12 months (boxes); 13 &gt; 12 ⇒ two in one month.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 9 · Catalan Numbers</span><span>Revise → practise → implement</span></footer></main></body></html>

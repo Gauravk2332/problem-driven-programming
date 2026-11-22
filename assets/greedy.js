@@ -1,5 +1,6 @@
 "use strict";
-/* Greedy labs for Module 4 study pages (lectures 12-18).
+/* Step-through labs: greedy labs for lectures 12-18, plus lab types registered in window.PDP_LABS
+   (assets/found.js, lectures 1-11), which must load before this file.
    Markup: <figure class="g-lab" data-g-lab="TYPE"> with [data-in=NAME] inputs, [data-apply],
    step controls ([data-reset] [data-prev] [data-play] [data-next] [data-end] [data-speed]),
    [data-code] [data-vars] [data-vis] [data-note] [data-result] [data-error].
@@ -345,6 +346,7 @@
     box.querySelector("[data-clear-table]").onclick = () => { cells.forEach(c => { c.value = ""; c.classList.remove("is-right", "is-wrong"); c.removeAttribute("aria-invalid"); }); fb.hidden = true; };
   }
 
+  Object.keys(window.PDP_LABS || {}).forEach(k => { if (!LABS[k]) LABS[k] = window.PDP_LABS[k]; });   // labs from found.js
   document.querySelectorAll("figure.g-lab[data-g-lab]").forEach(setup);
   document.querySelectorAll(".g-fill").forEach(setupFill);
 })();

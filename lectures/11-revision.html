@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 11: Collision Handling (R1UC544B).">
+<title>Revision sheet · Lecture 11 · Collision Handling</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="11-study.html">← Lecture 11 · Study</a><span><a href="../student.html#lecture-11">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Collision Handling · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 11</p></header>
+<div class="cols"><section><h2>Open addressing</h2><p>All keys in the array; probe h(k, 0), h(k, 1), … Insert at first EMPTY/DELETED; search until key or EMPTY. α = n/m ≤ 1.</p></section><section><h2>Probe functions</h2><table><thead><tr><th>Method</th><th>h(k, i)</th><th>Clustering</th></tr></thead><tbody><tr><td>Linear</td><td>(h + i) mod m</td><td>primary</td></tr><tr><td>Quadratic</td><td>(h + i²) mod m</td><td>secondary</td></tr><tr><td>Double</td><td>(h₁ + i·h₂) mod m</td><td>≈ none</td></tr></tbody></table><p>Quadratic: prime m, α ≤ ½. Double: h₂ ≠ 0, coprime with m.</p></section><section><h2>Example: 89, 18, 49, 58, 69, m = 10</h2><table><thead><tr><th></th><th>Slots</th><th>Probes</th></tr></thead><tbody><tr><td>Linear</td><td>9, 8, 0, 1, 2</td><td>1,1,2,4,4 = 12</td></tr><tr><td>Quadratic</td><td>9, 8, 0, 2, 3</td><td>1,1,2,3,3 = 10</td></tr><tr><td>Double (7 − k mod 7)</td><td>9, 8, 6, 3, 0</td><td>1,1,2,2,2 = 8</td></tr></tbody></table></section><section><h2>Deletion</h2><p>Tombstone X: search continues past it; insert may reuse it. Delete 49 → search 58 still found at 1; insert 79 reuses slot 0.</p></section><section><h2>Load factor &amp; rehashing</h2><p>Linear: successful ≈ ½(1 + 1/(1−α)), unsuccessful ≈ ½(1 + 1/(1−α)²): α = 0.5 → 1.5 / 2.5; 0.9 → 5.5 / 50.5. Rehash at α ≈ 0.5–0.75 to ≈ 2m (prime); amortised O(1).</p></section><section><h2>Common mistakes · full marks</h2><ul><li class="warn">Never empty a slot on delete.</li><li>Re-hash every key when resizing.</li><li>Open hashing = chaining.</li></ul><p>Full marks: probe function, table after each insert with probes, clustering, tombstones, α and rehashing.</p></section><section><h2>Two-mark self-test</h2><ol><li>What is open addressing?<br><i>A collision-resolution method that stores all keys in the table array and, on collision, probes a sequence of other slots.</i></li><li>Write the probe functions of linear and quadratic probing.<br><i>Linear (h(k) + i) mod m; quadratic (h(k) + i²) mod m.</i></li><li>What is primary clustering?<br><i>Long runs of occupied consecutive slots formed by linear probing; keys hashing into a run extend it.</i></li><li>Why are tombstones needed?<br><i>Emptying a slot would stop later searches early; a tombstone lets searches continue and insertions reuse the slot.</i></li><li>What is rehashing?<br><i>Creating a larger table and re-inserting every key with the new hash function when the load factor passes a threshold.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 11 · Collision Handling</span><span>Revise → practise → implement</span></footer></main></body></html>

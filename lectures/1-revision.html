@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 1: Algorithm Fundamentals (R1UC544B).">
+<title>Revision sheet · Lecture 1 · Algorithm Fundamentals</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="1-study.html">← Lecture 1 · Study</a><span><a href="../student.html#lecture-1">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Algorithm Fundamentals · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 1</p></header>
+<div class="cols"><section><h2>Algorithm</h2><p>A finite sequence of well-defined, effective steps mapping valid inputs to the required output, terminating for every valid input. A <b>program</b> implements an algorithm.</p></section><section><h2>Five characteristics</h2><table><thead><tr><th></th><th>Meaning</th></tr></thead><tbody><tr><td>Input</td><td>zero or more</td></tr><tr><td>Output</td><td>at least one</td></tr><tr><td>Definiteness</td><td>each step unambiguous</td></tr><tr><td>Finiteness</td><td>stops for every valid input</td></tr><tr><td>Effectiveness</td><td>each step basic and exact</td></tr></tbody></table></section><section><h2>Specification</h2><p><b>Pre</b>: guaranteed about the input. <b>Post</b>: required of the output. Correct = terminates and meets post for every input meeting pre.</p></section><section><h2>Max algorithm</h2><div class="f">best ← A[0]<br>for i ← 1..n−1: if A[i] &gt; best: best ← A[i]<br>return best</div><p>n − 1 comparisons, Θ(n) time, O(1) space. [12,7,19,4,19,8] → 19.</p></section><section><h2>Loop invariant proof</h2><dl><dt>Invariant</dt><dd>best = max(A[0..i−1])</dd><dt>Initialisation</dt><dd>i = 1: best = A[0]</dd><dt>Maintenance</dt><dd>both branches give max(A[0..i])</dd><dt>Termination</dt><dd>i = n ⇒ best = max(A)</dd></dl></section><section><h2>Design paradigms</h2><table><thead><tr><th>Paradigm</th><th>Example</th></tr></thead><tbody><tr><td>Brute force</td><td>trial division</td></tr><tr><td>Divide &amp; conquer</td><td>merge sort</td></tr><tr><td>Greedy</td><td>activity selection</td></tr><tr><td>Dynamic programming</td><td>knapsack</td></tr><tr><td>Backtracking</td><td>bracket strings</td></tr><tr><td>Transform &amp; conquer</td><td>hashing, presorting</td></tr></tbody></table></section><section><h2>Common mistakes · full marks</h2><ul><li>Passing tests ≠ proof.</li><li class="warn">best = 0 fails on all-negative input.</li><li>Finiteness ≠ efficiency.</li></ul><p>Full marks: define, list all five characteristics with examples, specify, prove with an invariant, give complexity.</p></section><section><h2>Two-mark self-test</h2><ol><li>Define an algorithm.<br><i>A finite sequence of well-defined, effective steps that takes zero or more inputs and produces at least one output, terminating for every valid input.</i></li><li>Distinguish an algorithm from a program.<br><i>An algorithm is a language-independent method; a program is its implementation in a specific language for a machine. One algorithm can have many programs.</i></li><li>What is definiteness? Give a step that violates it.<br><i>Each step has exactly one precise meaning. “Add a little salt” or “repeat until done” without a test violates it.</i></li><li>State the five characteristics of an algorithm.<br><i>Input, output, definiteness, finiteness, effectiveness.</i></li><li>What are a precondition and a postcondition?<br><i>Precondition: what holds for the input before execution. Postcondition: what must hold for the output after execution, given the precondition.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 1 · Algorithm Fundamentals</span><span>Revise → practise → implement</span></footer></main></body></html>

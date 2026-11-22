@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 10: Hashing Techniques (R1UC544B).">
+<title>Revision sheet · Lecture 10 · Hashing Techniques</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="10-study.html">← Lecture 10 · Study</a><span><a href="../student.html#lecture-10">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Hashing Techniques · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 10</p></header>
+<div class="cols"><section><h2>Terms</h2><p>Key → hash function h → bucket 0…m−1. Collision: different keys, same h. Unavoidable when keys &gt; slots (pigeonhole). Always compare keys after hashing.</p></section><section><h2>Hash functions</h2><table><thead><tr><th>Method</th><th>Formula</th></tr></thead><tbody><tr><td>Division</td><td>k mod m, m prime</td></tr><tr><td>Multiplication</td><td>⌊m·frac(kA)⌋, A ≈ 0.618</td></tr><tr><td>Folding</td><td>add key parts</td></tr><tr><td>Mid-square</td><td>middle digits of k²</td></tr><tr><td>Strings</td><td>Σ c·pⁱ mod M</td></tr></tbody></table><p>“abc” → 2946, “cab” → 1956 (p = 31).</p></section><section><h2>Chaining example (m = 7)</h2><table><thead><tr><th>Key</th><th>15</th><th>11</th><th>27</th><th>8</th><th>12</th><th>20</th></tr></thead><tbody><tr><td>h</td><td>1</td><td>4</td><td>6</td><td>1</td><td>5</td><td>6</td></tr></tbody></table><p>Bucket 1: 15 → 8; bucket 6: 27 → 20. α = 6/7.</p></section><section><h2>Cost</h2><p>α = n/m. Chaining: expected O(1 + α) search (uniform hashing), worst O(n). Keep α bounded ⇒ expected O(1). No ordering.</p></section><section><h2>Using maps and sets</h2><p>Membership, counting, complement lookup (two-sum [2,7,11,15], 9 → (0,1)), grouping, prefix sums. C++ unordered_map/set; Java HashMap/HashSet; Python dict/set.</p></section><section><h2>Common mistakes · full marks</h2><ul><li>Equal hash ≠ equal key.</li><li class="warn">k mod 10 or 2ᵏ with patterned keys.</li><li>Negative % in C++/Java.</li></ul><p>Full marks: terms, functions with conditions, worked table, α, expected vs worst case with assumption.</p></section><section><h2>Two-mark self-test</h2><ol><li>Define hashing and a hash function.<br><i>Hashing stores and finds keys by computing their position from the key. A hash function maps keys to indices 0 … m − 1.</i></li><li>What is a collision? Why can it not be avoided?<br><i>Two different keys with the same hash value. There are more possible keys than slots (pigeonhole).</i></li><li>Define load factor.<br><i>α = n/m, the number of stored keys divided by the number of buckets.</i></li><li>Name four hash function methods.<br><i>Division, multiplication, folding, mid-square (and polynomial for strings).</i></li><li>What are the expected and worst-case search times with chaining?<br><i>Expected O(1 + α) under simple uniform hashing; worst case O(n).</i></li></ol></section></div><footer><span>R1UC544B · Lecture 10 · Hashing Techniques</span><span>Revise → practise → implement</span></footer></main></body></html>

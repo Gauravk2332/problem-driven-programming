@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 3: Asymptotic Analysis (R1UC544B).">
+<title>Revision sheet · Lecture 3 · Asymptotic Analysis</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="3-study.html">← Lecture 3 · Study</a><span><a href="../student.html#lecture-3">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Asymptotic Analysis · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 3</p></header>
+<div class="cols"><section><h2>Definitions (for all n ≥ n₀)</h2><table><thead><tr><th></th><th>Condition</th><th>Meaning</th></tr></thead><tbody><tr><td>O(g)</td><td>f ≤ c·g</td><td>upper bound</td></tr><tr><td>Ω(g)</td><td>f ≥ c·g</td><td>lower bound</td></tr><tr><td>Θ(g)</td><td>c₁g ≤ f ≤ c₂g</td><td>tight bound</td></tr></tbody></table><p>Prove with a <b>witness</b> (c, n₀); disprove by showing none exists.</p></section><section><h2>Worked witness</h2><p>3n² + 5n + 2: ≥ 3n² (n ≥ 1); ≤ 4n² for n ≥ 6 (5n + 2 ≤ n²; fails at 5: 102 &gt; 100) ⇒ <b>Θ(n²)</b>, c₁ = 3, c₂ = 4, n₀ = 6. Also ≤ 10n² for n ≥ 1.</p></section><section><h2>Growth order</h2><div class="f">1 &lt; log n &lt; √n &lt; n &lt; n log n &lt; n² &lt; n³ &lt; 2ⁿ &lt; n! &lt; nⁿ</div><p>100n vs n²: equal at 100, n² larger from 101. 2ⁿ &gt; n³ from n = 10.</p></section><section><h2>Rules</h2><ul><li>constants drop: c·f = Θ(f)</li><li>sum: f + g = Θ(max)</li><li>product: O(f)·O(g) = O(fg)</li><li>degree-k polynomial = Θ(nᵏ)</li><li>log bases differ by a constant</li></ul></section><section><h2>Limit test</h2><table><thead><tr><th>lim f/g</th><th>Result</th></tr></thead><tbody><tr><td>0</td><td>f = O(g), not Θ</td></tr><tr><td>0 &lt; L &lt; ∞</td><td>f = Θ(g)</td></tr><tr><td>∞</td><td>f = Ω(g), not Θ</td></tr></tbody></table></section><section><h2>Common mistakes · full marks</h2><ul><li class="warn">Big-O ≠ worst case: bounds and cases are independent.</li><li>O is not symmetric: n = O(n²), n² ≠ O(n).</li><li>Numeric checks are evidence, not proof.</li></ul><p>Full marks: definition with quantifiers, explicit c and n₀, algebra, correct conclusion.</p></section><section><h2>Two-mark self-test</h2><ol><li>Define Big-O notation.<br><i>f(n) = O(g(n)) if there exist constants c &gt; 0 and n₀ ≥ 1 such that 0 ≤ f(n) ≤ c·g(n) for all n ≥ n₀.</i></li><li>Define Θ notation.<br><i>f = Θ(g) if there exist c₁, c₂ &gt; 0 and n₀ with c₁g(n) ≤ f(n) ≤ c₂g(n) for all n ≥ n₀.</i></li><li>Show 2n + 3 = O(n).<br><i>2n + 3 ≤ 3n for n ≥ 3, so c = 3, n₀ = 3 (or 2n + 3 ≤ 5n for n ≥ 1).</i></li><li>Arrange: n log n, 2ⁿ, log n, n².<br><i>log n &lt; n log n &lt; n² &lt; 2ⁿ.</i></li><li>Is n² = O(n)? Justify.<br><i>No. n² ≤ cn would require n ≤ c for all large n, impossible.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 3 · Asymptotic Analysis</span><span>Revise → practise → implement</span></footer></main></body></html>
