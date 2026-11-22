@@ -64,7 +64,7 @@
   function validStroke(s, maxWidth) {
     return (
       s && Array.isArray(s.points) && s.points.length &&
-      s.points.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y)) &&
+      s.points.every((p) => p && Number.isFinite(p.x) && Number.isFinite(p.y)) &&
       /^#[0-9a-f]{6}$/i.test(s.color) &&
       Number.isFinite(s.width) && s.width > 0 && s.width <= maxWidth
     );
@@ -130,8 +130,12 @@
   let saveTimer = null;
   function saveSoon() {
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(save, 400);
+    saveTimer = setTimeout(()=>{saveTimer=null;save()}, 400);
   }
+  // Flush pending pan/zoom changes before leaving the document.
+  function flushPending(){if(saveTimer!==null){clearTimeout(saveTimer);saveTimer=null;save()}}
+  window.addEventListener("pagehide",flushPending);
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)flushPending()});
   function current(s) {
     return s.isBoard ? boardBank : s.banks[mode];
   }
