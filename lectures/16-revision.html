@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 16: Priority Queue Based Greedy Algorithms (R1UC544B).">
+<title>Revision sheet · Lecture 16 · Priority Queue Based Greedy Algorithms</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="16-study.html">← Lecture 16 · Study</a><span><a href="../student.html#lecture-16">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Priority Queue Based Greedy Algorithms · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 16</p></header>
+<div class="cols"><section><h2>Min-heap</h2><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody><tr><td>peek min</td><td>O(1)</td></tr><tr><td>push / pop</td><td>O(log n)</td></tr><tr><td>build</td><td>O(n)</td></tr></tbody></table><p>Python heapq · C++ priority_queue&lt;T, vector&lt;T&gt;, greater&lt;&gt;&gt; · Java PriorityQueue.</p></section><section><h2>Optimal merge pattern</h2><div class="f">heap = sizes; cost = 0<br>while |heap| ≥ 2:<br>&nbsp; a = pop; b = pop; cost += a+b; push a+b</div><p>20, 30, 10, 5, 30: 5+10, 15+20, 30+30, 35+60 ⇒ <b>205</b> (left-to-right 270).</p></section><section><h2>Cost = Σ size × depth</h2><p>A merge order is a full binary tree; each file moves once per merge above it.</p></section><section><h2>Proof</h2><p>Deepest sibling leaves in an optimum: swap the two smallest there (cost cannot rise) ⇒ some optimum merges them first; contract and induct.</p></section><section><h2>Huffman coding</h2><table><thead><tr><th></th><th>a</th><th>b</th><th>c</th><th>d</th><th>e</th><th>f</th></tr></thead><tbody><tr><td>freq</td><td>45</td><td>13</td><td>12</td><td>16</td><td>9</td><td>5</td></tr><tr><td>code</td><td>0</td><td>101</td><td>100</td><td>111</td><td>1101</td><td>1100</td></tr></tbody></table><p>Total <b>224</b> vs 300 fixed. Prefix-free ⇒ unique decoding. Codes not unique; length is.</p></section><section><h2>Complexity · mistakes</h2><p>n − 1 rounds × O(log n) ⇒ O(n log n); O(n) space.</p><ul><li class="warn">Sorting once and merging left to right is not optimal.</li><li>Use 64-bit sums.</li><li>One symbol ⇒ code “0”.</li></ul></section><section><h2>Two-mark self-test</h2><ol><li>What is a priority queue? Give min-heap operation costs.<br><i>A collection supporting insert and remove-min (or max). Binary heap: peek O(1), push/pop O(log n), build O(n).</i></li><li>State the greedy rule for the optimal merge pattern.<br><i>Repeatedly merge the two smallest files and put the result back, until one file remains.</i></li><li>Why does the optimal merge pattern need a heap?<br><i>Each merge creates a new file size that competes with the remaining ones; a heap gives the two smallest in O(log n).</i></li><li>Define a prefix code.<br><i>A code in which no codeword is a prefix of another, so any bit string decodes uniquely.</i></li><li>Write the cost formula of a merge tree / code tree.<br><i>Σ wᵢ · depth(i) over leaves i.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 16 · Priority Queue Based Greedy Algorithms</span><span>Revise → practise → implement</span></footer></main></body></html>

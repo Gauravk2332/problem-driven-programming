@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 12: Greedy Strategy (R1UC544B).">
+<title>Revision sheet · Lecture 12 · Greedy Strategy</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="12-study.html">← Lecture 12 · Study</a><span><a href="../student.html#lecture-12">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Greedy Strategy · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 12</p></header>
+<div class="cols"><section><h2>Greedy method</h2><p>Build a solution in steps; at each step take the best feasible candidate by a fixed rule; never undo a choice. Usually sort + one pass.</p><div class="f">solution = ∅<br>repeat: x = Select(candidates)<br>&nbsp; if Feasible(solution ∪ {x}): add x<br>until solution complete</div></section><section><h2>Components</h2><p>Candidate set · selection function · feasibility check · objective · solution check.</p></section><section><h2>Why greedy can be correct</h2><dl><dt>Greedy-choice</dt><dd>some optimal solution contains the first greedy choice</dd><dt>Optimal substructure</dt><dd>greedy choice + optimal solution of the remainder is optimal</dd></dl><p>Both ⇒ induction ⇒ greedy optimal. Substructure alone is <b>not</b> enough (DP has it too).</p></section><section><h2>Worked example</h2><p>₹289, coins 1,2,5,10,20,50,100: 100+100+50+20+10+5+2+2 = <b>8</b> (optimal; rupees are canonical).</p></section><section><h2>Counterexamples</h2><table><thead><tr><th>Coins</th><th>Amount</th><th>Greedy</th><th>Optimum</th></tr></thead><tbody><tr><td>{1,3,4}</td><td>6</td><td>4+1+1 (3)</td><td>3+3 (2)</td></tr><tr><td>{1,5,6,9}</td><td>11</td><td>9+1+1 (3)</td><td>5+6 (2)</td></tr><tr><td>{1,10,25}</td><td>30</td><td>25+1×5 (6)</td><td>10×3 (3)</td></tr><tr><td>{3,4}</td><td>6</td><td>stuck at 2</td><td>3+3</td></tr></tbody></table></section><section><h2>Exchange proof for {1,2,5,10}</h2><p>In an optimal solution: ≤ one 1; ≤ two 2s; not 1 with two 2s (→5); ≤ one 5 (5+5→10). So coins &lt;10 total ≤ 9 ⇒ exactly ⌊A/10⌋ tens, as greedy takes. Repeat for the remainder.</p></section><section><h2>Greedy vs DP</h2><table><thead><tr><th></th><th>Greedy</th><th>DP</th></tr></thead><tbody><tr><td>Choices tried</td><td>one</td><td>all, once each</td></tr><tr><td>Change-making</td><td>O(k log k + k)</td><td>O(A·k), O(A) space</td></tr><tr><td>Correct for</td><td>canonical systems</td><td>any system</td></tr></tbody></table></section><section><h2>Common mistakes · full marks</h2><ul><li>Examples that pass are not a proof.</li><li>Greedy rule ≠ “largest”; it is problem-specific.</li><li class="warn">Without coin 1, greedy can get stuck.</li></ul><p>Full marks: define, state both properties, trace, then prove (exchange) or refute (counterexample), and give complexity.</p></section><section><h2>Two-mark self-test</h2><ol><li>Define the greedy method.<br><i>A design technique that builds a solution step by step, at each step making the locally best feasible choice by a fixed rule and never revising it.</i></li><li>State the greedy-choice property.<br><i>There exists an optimal solution that contains the first choice made by the greedy rule; so the greedy choice can be made without losing optimality.</i></li><li>State the optimal substructure property.<br><i>An optimal solution contains optimal solutions to its subproblems: after the first choice, the rest is an optimal solution of the remaining instance.</i></li><li>Give a coin system and amount where largest-first is not optimal.<br><i>Coins {1,3,4}, amount 6: greedy 4+1+1 (3 coins), optimum 3+3 (2 coins).</i></li><li>List the five components of a greedy algorithm.<br><i>Candidate set, selection function, feasibility check, objective function, solution check.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 12 · Greedy Strategy</span><span>Revise → practise → implement</span></footer></main></body></html>

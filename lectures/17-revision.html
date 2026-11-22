@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 17: Greedy Scheduling Algorithms (R1UC544B).">
+<title>Revision sheet · Lecture 17 · Greedy Scheduling Algorithms</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="17-study.html">← Lecture 17 · Study</a><span><a href="../student.html#lecture-17">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Greedy Scheduling Algorithms · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 17</p></header>
+<div class="cols"><section><h2>SPT (one machine, all ready at 0)</h2><p>Minimise Σ Cᵢ (≡ average completion / waiting). Rule: shortest processing time first.</p><div class="f">Σ Cᵢ = n·t₁ + (n−1)·t₂ + … + 1·tₙ</div></section><section><h2>SPT example</h2><table><thead><tr><th>Job</th><th>P2</th><th>P4</th><th>P1</th><th>P3</th></tr></thead><tbody><tr><td>t</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>start</td><td>0</td><td>1</td><td>3</td><td>6</td></tr><tr><td>C</td><td>1</td><td>3</td><td>6</td><td>10</td></tr></tbody></table><p>Σ C = 20; average waiting 2.5. (A6 B2 C4 → B, C, A: 20.)</p></section><section><h2>SPT proof</h2><p>Adjacent x, y with tₓ &gt; tᵧ: swapping saves tₓ − tᵧ, others unchanged ⇒ optimum has no inversions ⇒ SPT. Weighted: sort by tᵢ/wᵢ (Smith).</p></section><section><h2>Interval partitioning</h2><div class="f">sort by start; heap of (finish, room)<br>for [s, f): if heap.min ≤ s: reuse<br>&nbsp; else open new room; push (f, room)</div></section><section><h2>Example</h2><p>A[9,11) B[9,13) C[9,11) D[11,14) E[11,13) F[13,15) G[14,16) H[14,16): R1 = A, D, H; R2 = B, F; R3 = C, E, G ⇒ <b>3</b> rooms = depth.</p></section><section><h2>Proof · complexity</h2><p>New room k opened at s ⇒ k − 1 rooms busy at s ⇒ k intervals overlap ⇒ depth ≥ k ⇒ optimal. Both algorithms O(n log n).</p></section><section><h2>Mistakes · full marks</h2><ul><li>Makespan is order-independent; Σ C is not.</li><li class="warn">Rooms: sort by start, not finish.</li><li>Half-open: reuse if finish ≤ start.</li></ul></section><section><h2>Two-mark self-test</h2><ol><li>State the SPT rule and its objective.<br><i>Run jobs in non-decreasing processing time; it minimises the sum (and average) of completion and waiting times when all jobs are ready at time 0.</i></li><li>Why does job order not affect the makespan on one machine?<br><i>The last job always finishes at the sum of all lengths, whatever the order.</i></li><li>Define the depth of a set of intervals.<br><i>The maximum number of intervals that contain a common point (alive at the same moment).</i></li><li>State the interval partitioning rule.<br><i>Sort by start; assign each interval to a room that is free by its start (earliest-free via a min-heap); open a new room only if none is free.</i></li><li>Give the complexity of interval partitioning.<br><i>O(n log n): sorting plus n heap operations of O(log n).</i></li></ol></section></div><footer><span>R1UC544B · Lecture 17 · Greedy Scheduling Algorithms</span><span>Revise → practise → implement</span></footer></main></body></html>

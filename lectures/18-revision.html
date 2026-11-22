@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 18: Greedy Performance and Correctness (R1UC544B).">
+<title>Revision sheet · Lecture 18 · Greedy Performance and Correctness</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="18-study.html">← Lecture 18 · Study</a><span><a href="../student.html#lecture-18">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Greedy Performance and Correctness · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 18</p></header>
+<div class="cols"><section><h2>Proof toolkit</h2><table><thead><tr><th>Technique</th><th>Use</th></tr></thead><tbody><tr><td>Stays ahead</td><td>activity selection</td></tr><tr><td>Exchange</td><td>knapsack, jobs, SPT, Huffman</td></tr><tr><td>Lower bound</td><td>interval partitioning (depth)</td></tr><tr><td>Cut property</td><td>MST (Kruskal, Prim)</td></tr></tbody></table><p>All rely on greedy-choice + optimal substructure.</p></section><section><h2>Kruskal</h2><div class="f">sort edges by weight<br>for (u, v, w): if find(u) ≠ find(v):<br>&nbsp; accept; union(u, v)<br>stop at V − 1 edges</div><p>O(E log E); DSU ≈ O(1) per op.</p></section><section><h2>Example (cost 39)</h2><p>AD5 ✓ CE5 ✓ DF6 ✓ AB7 ✓ BE7 ✓ BC8 ✗ EF8 ✗ BD9 ✗ EG9 ✓ ⇒ 6 edges, <b>39</b>.</p></section><section><h2>Cut property</h2><p>Lightest edge e across cut (S, V−S) is in some MST: T + e has a cycle with another crossing f, w(f) ≥ w(e) ⇒ T − f + e is an MST.</p></section><section><h2>Counterexamples</h2><table><thead><tr><th>Rule</th><th>Fails on</th></tr></thead><tbody><tr><td>largest coin</td><td>{1,3,4}, 6</td></tr><tr><td>0/1 ratio</td><td>160 vs 220</td></tr><tr><td>shortest activity</td><td>[0,5) [4,7) [6,11)</td></tr><tr><td>Dijkstra</td><td>negative edge C→B −2</td></tr></tbody></table><p>Stress-test greedy vs brute force on small random inputs.</p></section><section><h2>Running times</h2><table><thead><tr><th>Algorithm</th><th>Time</th></tr></thead><tbody><tr><td>knapsack · activities · SPT · rooms</td><td>O(n log n)</td></tr><tr><td>job sequencing</td><td>O(n²) / DSU ≈ O(n log n)</td></tr><tr><td>merge · Huffman</td><td>O(n log n)</td></tr><tr><td>Kruskal</td><td>O(E log E)</td></tr><tr><td>Prim · Dijkstra (heap)</td><td>O((V+E) log V)</td></tr></tbody></table></section><section><h2>Full marks</h2><ul><li>Name the technique and execute it.</li><li class="warn">A trace is not a proof.</li><li>Disconnected graph ⇒ spanning forest.</li></ul></section><section><h2>Two-mark self-test</h2><ol><li>Define a minimum spanning tree.<br><i>A spanning tree (connects all V vertices with V − 1 edges, no cycles) of minimum total edge weight in a connected weighted undirected graph.</i></li><li>State the cut property.<br><i>For any cut (S, V − S), a minimum-weight edge crossing it belongs to some MST.</i></li><li>Name four techniques for proving greedy algorithms correct.<br><i>Greedy stays ahead; exchange argument; lower bound (structural bound); cut property.</i></li><li>What does DSU provide in Kruskal's algorithm?<br><i>Fast find (same component?) and union (merge components), almost O(1) amortised each with union by size and path compression.</i></li><li>Give the time complexity of Kruskal's algorithm.<br><i>O(E log E) for sorting, plus near-linear DSU work: O(E log E) overall.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 18 · Greedy Performance and Correctness</span><span>Revise → practise → implement</span></footer></main></body></html>

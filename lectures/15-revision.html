@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 15: Job Sequencing with Deadlines (R1UC544B).">
+<title>Revision sheet · Lecture 15 · Job Sequencing with Deadlines</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="15-study.html">← Lecture 15 · Study</a><span><a href="../student.html#lecture-15">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>Job Sequencing with Deadlines · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 15</p></header>
+<div class="cols"><section><h2>Problem</h2><p>Unit-time jobs, deadline dᵢ ≥ 1, profit pᵢ ≥ 0, one machine. Profit counts only if the job finishes by dᵢ. Maximise total profit.</p></section><section><h2>Algorithm</h2><div class="f">sort jobs by profit descending<br>slots = min(n, max d)<br>for each job: t = latest free slot ≤ min(d, slots)<br>&nbsp; if t exists: slot[t] = job else reject</div></section><section><h2>Example 1</h2><p>p = (100, 10, 15, 27), d = (2, 1, 2, 1): J1 → 2, J4 → 1, J3 and J2 rejected. Order J4, J1; profit <b>127</b>.</p></section><section><h2>Example 2</h2><table><thead><tr><th>Job</th><th>p</th><th>d</th><th>slot</th></tr></thead><tbody><tr><td>J1</td><td>20</td><td>2</td><td>2</td></tr><tr><td>J2</td><td>15</td><td>2</td><td>1</td></tr><tr><td>J3</td><td>10</td><td>1</td><td>reject</td></tr><tr><td>J4</td><td>5</td><td>3</td><td>3</td></tr><tr><td>J5</td><td>1</td><td>3</td><td>reject</td></tr></tbody></table><p>Profit <b>40</b>.</p></section><section><h2>Feasibility</h2><p>S feasible ⇔ ∀t: |{i ∈ S : dᵢ ≤ t}| ≤ t ⇔ sorted by deadline, i-th job has d ≥ i.</p></section><section><h2>Proof idea</h2><p>First disagreement j with an optimum O. j ∈ O∖G impossible (subset of O infeasible). j ∈ G∖O: swap in j for a later (cheaper) k ∈ O with dₖ ≤ first overloaded t ⇒ still feasible, profit ≥ ⇒ contradiction.</p></section><section><h2>Complexity · mistakes</h2><p>O(n log n + n·d), worst O(n²); DSU slot finder ≈ O(n log n).</p><ul><li class="warn">Earliest free slot loses (5:2, 4:1).</li><li>Deadline order alone ignores profit.</li><li>Only valid for unit-time jobs.</li></ul></section><section><h2>Two-mark self-test</h2><ol><li>State the job sequencing with deadlines problem.<br><i>n unit-time jobs with deadlines dᵢ and profits pᵢ on one machine; choose and order jobs so each chosen job finishes by its deadline, maximising total profit.</i></li><li>State the greedy rule.<br><i>Sort by decreasing profit; place each job in the latest free slot ≤ its deadline; reject if none.</i></li><li>When is a set of jobs feasible?<br><i>When, ordered by deadline, the i-th job has deadline ≥ i (equivalently, for every t at most t jobs have deadline ≤ t).</i></li><li>Why use the latest free slot?<br><i>It keeps earlier slots free for jobs with smaller deadlines, so a feasible job is never blocked unnecessarily.</i></li><li>Give the time complexity of the simple algorithm.<br><i>O(n log n) sort + O(n·d) slot scans, d = min(n, max deadline): O(n²) worst case.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 15 · Job Sequencing with Deadlines</span><span>Revise → practise → implement</span></footer></main></body></html>
