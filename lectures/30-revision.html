@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Revision sheet for Lecture 30: State Machine DP (R1UC544B).">
+<title>Revision sheet · Lecture 30 · State Machine DP</title>
+<style>
+:root{--ink:#18283d;--muted:#52647a;--navy:#102b46;--accent:#006e68;--line:#d6e0e8;--soft:#eef6f4}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:210mm;margin:16px auto 0;padding:0 4px}
+.bar a{color:var(--accent);font-weight:650;text-decoration:none}
+.bar button{font:inherit;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+.sheet{width:210mm;min-height:297mm;margin:12px auto 24px;background:#fff;padding:11mm 12mm;box-shadow:0 4px 18px #102b4622}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:8px}
+header h1{margin:0;font-size:20px;color:var(--navy);letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.cols{columns:2;column-gap:7mm}
+section{break-inside:avoid;margin:0 0 7px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 3px}
+p,ul,ol,dl{margin:0 0 4px}
+ul,ol{padding-left:17px}
+li{margin-bottom:1px}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
+dt{font-weight:700}
+dd{margin:0}
+.f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
+th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#f2f6f9}
+td.n{text-align:center}
+.warn{color:#8a2a1e}
+footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+@media screen and (max-width:820px){.sheet{width:auto;min-height:0;margin:10px;padding:16px}.cols{columns:1}}
+@page{size:A4;margin:9mm}
+@media print{body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:auto;padding:0;min-height:0;overflow:visible}}
+</style></head>
+<body>
+<div class="bar"><a href="30-study.html">← Lecture 30 · Study</a><span><a href="../student.html#lecture-30">All lectures</a></span><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+<main class="sheet">
+<header><h1>State Machine DP · Revision sheet</h1><p>Problem Driven Programming · R1UC544B<br>Lecture 30</p></header>
+<div class="cols"><section><h2>Idea</h2><p>Store only the past information that changes future choices. Impossible states start at −∞, never 0. Update every state from the <b>previous</b> pair (simultaneous assignment).</p></section><section><h2>Non-adjacent selection</h2><div class="f">skip'=max(skip,take)<br>take'=skip+v<br>start (0,−∞); answer max(skip,take)</div><p>[2,7,9,3,1] → 12 (2+9+1). [4,5,4] → 8: greedy 5 fails. Circular row: max of [0..n−2] and [1..n−1].</p></section><section><h2>Stock, unlimited trades</h2><div class="f">cash'=max(cash,hold+p)<br>hold'=max(hold,cash−p)<br>start (0,−∞); answer cash</div><p>[7,1,5,3,6,4] → 7: buy 1 sell 5, buy 3 sell 6. hold is net profit while owning a share, not market value.</p></section><section><h2>Changed rules</h2><div class="f">fee: cash'=max(cash,hold+p−f)<br>cooldown: rest'=max(rest,sold), sold'=hold+p, hold'=max(hold,rest−p)</div><p>Cooldown start (0,−∞,−∞); answer max(rest,sold); [1,2,3,0,2] → 3. Limited trades: add a counter.</p></section><section><h2>Complexity · full marks</h2><p>Θ(n) time, Θ(1) extra for the value; store decisions to recover the chosen houses or trades.</p><ul><li class="warn">In-place updates can allow an illegal second action.</li><li>Draw the transition graph first.</li></ul><p>Full marks: states, transitions, base, answer, trace.</p></section><section><h2>Two-mark self-test</h2><ol><li>Why use −∞ in initial take/hold?<br><i>No valid history reaches that state before any action; it must never win a maximum.</i></li><li>What is the correct terminal state for trading?<br><i>Cash, since no share may remain unsold.</i></li></ol></section></div><footer><span>R1UC544B · Lecture 30 · State Machine DP</span><span>Revise → practise → implement</span></footer></main></body></html>
