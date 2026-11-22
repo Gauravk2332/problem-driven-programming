@@ -1,8 +1,19 @@
 "use strict";
-const CACHE="pdp-static-v6";
+const CACHE="pdp-static-v7";
 const ROOT=new URL("./",self.location.href);
-const FILES=["","index.html","lectures/19.html","lectures/19-study.html","lectures/19-revision.html","assets/site.css","assets/site.css?v=2","assets/site.js?v=2","assets/lesson.css","assets/lesson.js?v=4.3","assets/lecture19.js?v=4","assets/ink.css?v=2","assets/classroom.css?v=3.1","assets/workspace.js?v=5.2","assets/practice.css?v=1","assets/table-check.js?v=1","assets/board.css?v=3","assets/classroom.js?v=4.3","assets/compact-ui.css?v=4.1","assets/dp19-content.js?v=1","assets/dp19-content.css?v=1","assets/study.css?v=1.1","assets/study.js?v=1","assets/code.css?v=1","assets/code.js?v=1"];
+const SHARED=["","index.html","assets/site.css","assets/site.css?v=2","assets/site.js?v=2"];
+const PACKS={"19":["lectures/19.html","lectures/19-study.html","lectures/19-revision.html","assets/lesson.css","assets/lesson.js?v=4.3","assets/lecture19.js?v=4","assets/ink.css?v=2","assets/classroom.css?v=3.1","assets/workspace.js?v=5.2","assets/practice.css?v=1","assets/table-check.js?v=1","assets/board.css?v=3","assets/classroom.js?v=4.3","assets/compact-ui.css?v=4.1","assets/dp19-content.js?v=1","assets/dp19-content.css?v=1","assets/study.css?v=1.1","assets/study.js?v=1","assets/code.css?v=1","assets/code.js?v=1"],"20":["lectures/20.html","lectures/20-study.html","lectures/20-revision.html","assets/lesson.css","assets/ink.css?v=2","assets/classroom.css?v=3.1","assets/compact-ui.css?v=4.1","assets/lesson.js?v=4.3","assets/lecture20.js?v=1","assets/workspace.js?v=5.2","assets/classroom.js?v=4.4","assets/code.js?v=1","assets/dp20.css?v=1","assets/code.css?v=1","assets/board.css?v=3","assets/practice.css?v=1","assets/study.css?v=1.1","assets/study.js?v=1.1"]};
 self.addEventListener("install",e=>e.waitUntil(self.skipWaiting()));
 self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
-self.addEventListener("message",e=>{if(!["CACHE_LECTURE_19","CACHE_LECTURE_19_DUAL"].includes(e.data?.type))return;e.waitUntil((async()=>{try{const cache=await caches.open(CACHE);await cache.addAll(FILES.map(p=>new Request(new URL(p,ROOT),{cache:"reload"})));e.ports[0]?.postMessage({ok:true,pack:"dual"})}catch(err){e.ports[0]?.postMessage({ok:false,error:String(err)})}})())});
-self.addEventListener("fetch",e=>{const url=new URL(e.request.url);if(e.request.method!=="GET"||url.origin!==ROOT.origin||!url.pathname.startsWith(ROOT.pathname))return;e.respondWith((async()=>{try{return await fetch(e.request)}catch(err){const cache=await caches.open(CACHE);const hit=await cache.match(e.request)||(e.request.mode==="navigate"?await cache.match(e.request,{ignoreSearch:true}):null)||await caches.match(e.request);return hit||new Response("This page is not in the offline lecture pack.",{status:503,headers:{"Content-Type":"text/plain"}})}})())});
+self.addEventListener("message",e=>{
+ const legacy=["CACHE_LECTURE_19","CACHE_LECTURE_19_DUAL"].includes(e.data?.type);
+ if(!legacy&&e.data?.type!=="CACHE_LECTURE")return;
+ const lecture=legacy?"19":String(e.data.lecture);
+ e.waitUntil((async()=>{try{
+  if(!Object.prototype.hasOwnProperty.call(PACKS,lecture))throw Error("Lecture not published.");
+  const cache=await caches.open(CACHE);
+  await cache.addAll([...new Set([...SHARED,...PACKS[lecture]])].map(p=>new Request(new URL(p,ROOT),{cache:"reload"})));
+  e.ports[0]?.postMessage({ok:true,pack:legacy?"dual":"lecture",lecture});
+ }catch(err){e.ports[0]?.postMessage({ok:false,error:String(err)})}})());
+});
+self.addEventListener("fetch",e=>{const url=new URL(e.request.url);if(e.request.method!=="GET"||url.origin!==ROOT.origin||!url.pathname.startsWith(ROOT.pathname))return;e.respondWith((async()=>{try{return await fetch(e.request)}catch(err){const cache=await caches.open(CACHE);const hit=await cache.match(e.request)||(e.request.mode==="navigate"?await cache.match(e.request,{ignoreSearch:true}):null)||await caches.match(e.request);return hit||new Response("This page is not in your saved offline lecture pack.",{status:503,headers:{"Content-Type":"text/plain"}})}})())});
