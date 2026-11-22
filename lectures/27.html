@@ -1,5 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lecture 27 · Integrated Problem Solving | R1UC544B</title><meta name="description" content="Integrated algorithm selection, weighted scheduling, optimization, fast I/O and testing."><link rel="stylesheet" href="../assets/site.css"><link rel="stylesheet" href="../assets/lesson.css"><link rel="stylesheet" href="../assets/ink.css?v=2"><link rel="stylesheet" href="../assets/classroom.css?v=3.1"><link rel="stylesheet" href="../assets/compact-ui.css?v=4.1"><script defer src="../assets/lesson.js?v=4.3"></script><script defer src="../assets/lecture27.js?v=1"></script><script defer src="../assets/workspace.js?v=5.3"></script><script defer src="../assets/classroom.js?v=4.5"></script><script defer src="../assets/code.js?v=1.1"></script><link rel="stylesheet" href="../assets/dp21.css?v=1" /><link rel="stylesheet" href="../assets/dp27.css?v=1"><link rel="stylesheet" href="../assets/code.css?v=1"><link rel="stylesheet" href="../assets/board.css?v=3"><link rel="stylesheet" href="../assets/practice.css?v=1"><link rel="stylesheet" href="../assets/study.css?v=1.1"></head>
-<body data-content-revision="integrated-v1" data-lecture="27"><a class="skip" href="#main">Skip to lecture</a><header class="lesson-top"><div class="wrap ux-main"><div class="ux-brand"><a href="../index.html#lectures" title="Course roadmap" aria-label="Course roadmap"><svg class="ux-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg><span>Course</span></a><span class="ux-brand-divider"></span><strong>27 · Integrated Problem Solving</strong></div><div class="lesson-toolbar"><nav class="mode-switch" aria-label="Lecture mode"><a href="27.html" aria-current="page">Class view</a><a href="27-study.html">Study</a></nav>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lecture 27 · Integrated Problem Solving | R1UC544B</title><meta name="description" content="Integrated algorithm selection, weighted scheduling, optimization, fast I/O and testing."><link rel="stylesheet" href="../assets/site.css"><link rel="stylesheet" href="../assets/lesson.css?v=2"><link rel="stylesheet" href="../assets/ink.css?v=2"><link rel="stylesheet" href="../assets/classroom.css?v=3.1"><link rel="stylesheet" href="../assets/compact-ui.css?v=4.1"><script defer src="../assets/lesson.js?v=4.3"></script><script defer src="../assets/lecture27.js?v=1"></script><script defer src="../assets/workspace.js?v=5.3"></script><script defer src="../assets/classroom.js?v=4.5"></script><script defer src="../assets/code.js?v=1.1"></script><link rel="stylesheet" href="../assets/dp21.css?v=1" /><link rel="stylesheet" href="../assets/dp27.css?v=1"><link rel="stylesheet" href="../assets/code.css?v=1"><link rel="stylesheet" href="../assets/board.css?v=3"><link rel="stylesheet" href="../assets/practice.css?v=1"><link rel="stylesheet" href="../assets/study.css?v=1.1"></head>
+<body data-content-revision="integrated-v2" data-lecture="27"><a class="skip" href="#main">Skip to lecture</a><header class="lesson-top"><div class="wrap ux-main"><div class="ux-brand"><a href="../index.html#lectures" title="Course roadmap" aria-label="Course roadmap"><svg class="ux-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg><span>Course</span></a><span class="ux-brand-divider"></span><strong>27 · Integrated Problem Solving</strong></div><div class="lesson-toolbar"><nav class="mode-switch" aria-label="Lecture mode"><a href="27.html" aria-current="page">Class view</a><a href="27-study.html">Study</a></nav>
 <button class="control ink-toggle" id="ink-toggle" type="button" title="Draw / annotate (D)" aria-label="Draw / annotate" aria-expanded="false" aria-controls="ink-toolbar"><svg class="ux-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5 4 4M4 20l5-1L20 8a2.8 2.8 0 0 0-4-4L5 15l-1 5Z"/></svg><span class="ux-control-text">Draw</span></button>
 <button class="control" type="button" id="board-toggle" title="Whiteboard (W)" aria-label="Whiteboard"><svg class="ux-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21l4-4 4 4M7 9h10m-10 4h6"/></svg><span class="ux-control-text">Whiteboard</span></button>
 <button id="fullscreen" class="control ux-icon-button" type="button" title="Full screen (F)" aria-label="Full screen (F)" ><svg class="ux-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6m12-6h6v6m0 6v6h-6m-12-6v6h6"/></svg></button>
@@ -13,7 +13,141 @@
 <section class="lesson-section" id="selection" data-title="Recognize the pattern, not the keyword"><p class="section-kicker">Section 03</p><h2>Recognize the pattern, not the keyword</h2><div class="table-scroll"><table class="academic-table"><thead><tr><th scope="col">Signal in the problem</th><th scope="col">Candidate approach</th><th scope="col">Check before committing</th></tr></thead><tbody><tr><td>Repeated static range totals</td><td>Prefix sums</td><td>No updates; correct inclusive/exclusive indices</td></tr><tr><td>Find two distinct positions with given sum</td><td>Hashing or sort + two pointers</td><td>Do not reuse same index; hash expected complexity</td></tr><tr><td>Maximum number of non-overlapping jobs</td><td>Earliest-finish greedy</td><td>Equal importance; exchange proof</td></tr><tr><td>Maximum total reward of jobs</td><td>Weighted interval DP + search</td><td>Finish-sorted compatible prefix</td></tr><tr><td>One copy per item, small capacity</td><td>0/1 knapsack or subset sum</td><td>Max vs feasibility; descending updates</td></tr><tr><td>Unlimited positive coins, exact total</td><td>Coin DP</td><td>Min vs count; order matters</td></tr><tr><td>Longest increasing subsequence</td><td>Endpoint DP or binary-search tails</td><td>Strictness and actual witness</td></tr><tr><td>Small set of used objects</td><td>Bitmask DP</td><td>2ⁿ states; last endpoint may matter</td></tr><tr><td>Very large bound, digit property</td><td>Digit DP</td><td>Tight, leading zeros, property state</td></tr></tbody></table></div><p>These are candidates, not universal rules. Test assumptions, find a counterexample to a greedy choice, and ensure state remembers all information relevant to future decisions.</p></section>
 <section class="lesson-section" id="derive" data-title="Capstone: derive weighted interval DP"><p class="section-kicker">Section 04</p><h2>Capstone: derive weighted interval DP</h2><div class="formula">Sort by nondecreasing end day.<br>p(i) = number of earlier jobs with end &lt; start[i].<br>dp[0]=0<br>dp[i]=max(dp[i−1], reward[i]+dp[p(i)])<br>Answer dp[n]</div><p>Every optimum for the first i jobs either excludes job i or includes it. If excluded, the best reward is dp[i−1]. If included, all other jobs must finish strictly before its start: they form a subset of the compatible prefix of length p(i). Conversely any optimal compatible-prefix schedule can append job i. Both cases are feasible and exhaust the choices. Sorting makes compatible ends a prefix; binary search finds its length, not an arbitrary compatible job. Positive-length or same-day closed intervals use end &lt; start; for half-open intervals use end ≤ start instead. Save p(i) and trace backwards: skip on equality with dp[i−1], otherwise take i and jump to p(i). Empty schedule is legal.</p><p>Without search, scanning backwards for p(i) costs O(n²). Since ends are sorted, binary search for the first end ≥ start among earlier jobs. Its zero-based index equals the number of compatible earlier jobs. Store dp indexed by prefix length.</p></section>
 <section class="lesson-section" id="trace" data-title="Optimize and trace"><p class="section-kicker">Section 05</p><h2>Optimize and trace</h2><figure class="figure cap27" data-schedule27><h3>Trace sorting, predecessor search and DP</h3><div class="lab-controls"><label for="job-input">Jobs: start,end,reward; …</label><input id="job-input" data-input value="1,2,2;3,4,2;1,4,10;5,6,3" maxlength="180"><button type="button" class="control" data-apply>Use instance</button></div><p class="study-shared-caption">Up to 12 jobs; days/rewards 0–999, start ≤ end; empty list allowed. Inclusive days.</p><p data-error role="alert"></p><div class="lab-controls"><button class="control" type="button" data-reset>Reset</button><button class="control" type="button" data-prev>Previous</button><button class="control primary" type="button" data-play aria-pressed="false">Play</button><button class="control" type="button" data-next>Next</button><button class="control" type="button" data-end>Show result</button><label>Speed <select data-speed><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label></div><div class="trace-box"><div><strong>Pseudocode</strong><pre><span class="trace-line" data-line="0">Sort by end; dp[0]=0</span><span class="trace-line" data-line="1">Binary search first end ≥ start in earlier prefix</span><span class="trace-line" data-line="2">dp[i]=max(skip, reward+dp[p(i)])</span></pre></div><div><strong>Live state</strong><pre data-vars></pre></div></div><div class="k21-grid" data-grid></div><p data-note class="lab-state" aria-live="polite"></p><p data-result role="status"></p><figcaption>Gold: current job; teal: midpoint considered during predecessor search. Final output compares the greedy schedule with the optimal reward.</figcaption></figure><div class="table-scroll"><table class="academic-table"><thead><tr><th scope="col">i</th><th scope="col">Job</th><th scope="col">p(i)</th><th scope="col">Skip</th><th scope="col">Take</th><th scope="col">dp[i]</th></tr></thead><tbody><tr><td>0</td><td>∅</td><td>—</td><td>—</td><td>—</td><td>0</td></tr><tr><td>1</td><td>A</td><td>0</td><td>0</td><td>2</td><td>2</td></tr><tr><td>2</td><td>B</td><td>1</td><td>2</td><td>4</td><td>4</td></tr><tr><td>3</td><td>C</td><td>0</td><td>4</td><td>10</td><td>10</td></tr><tr><td>4</td><td>D</td><td>3</td><td>10</td><td>13</td><td>13</td></tr></tbody></table></div><p>For default CSES-style inclusive days, equal endpoints overlap. Time O(n log n), extra O(n) including arrays, sorting and optional parents; empty input 0. Stable finish ties are not required for correctness because equal finishes cannot precede each other in this formulation.</p></section>
-<section class="lesson-section" id="code" data-title="From recurrence to a submission"><p class="section-kicker">Section 06</p><h2>From recurrence to a submission</h2><div class="code-tabs"><div class="code-pane" data-lang="python" data-label="Python"><p class="code-label">projects.py</p><pre><code># Input: n, followed by n triples (start, end, reward).
+<section class="lesson-section" id="code" data-title="From recurrence to a submission"><p class="section-kicker">Section 06</p><h2>From recurrence to a submission</h2><div class="td-bu" id="top-down-bottom-up"><h3>Top-down and bottom-up</h3><p>Weighted interval scheduling can also be written either way.</p><div class="table-scroll"><table class="academic-table"><thead><tr><th></th><th>Top-down (memoization)</th><th>Bottom-up (tabulation)</th></tr></thead><tbody><tr><th>Starts from</th><td>All jobs: best(n)</td><td>No jobs: dp[0] = 0</td></tr><tr><th>Stored by</th><td>A memo keyed by prefix length i</td><td>An array dp[0…n], filled in increasing i</td></tr><tr><th>How it runs</th><td>Recursion. A state is solved the first time it is asked for, then read from the cache</td><td>Loops. Every state is filled once, after the states it depends on</td></tr><tr><th>Which states</th><td>Only the states the final answer actually needs</td><td>Usually every state in the table</td></tr><tr><th>Extra cost</th><td>A call stack as deep as the longest chain of calls; very deep inputs can overflow it</td><td>No recursion; the table can often be shrunk to one or two rows</td></tr><tr><th>Choose it when</th><td>The fill order is awkward, or many states are never needed</td><td>The fill order is clear and most states are needed; this is the safer default for large inputs</td></tr></tbody></table></div><p>With n = 200,000 the top-down recursion would be 200,000 calls deep, which overflows the default stack in most languages. That is why the judge-ready program below is bottom-up; top-down is still a good way to check the recurrence on small inputs.</p><div class="code-tabs"><div class="code-pane" data-lang="python" data-label="Python"><p class="code-label">Python · projects_two_ways.py</p><pre><code>from bisect import bisect_left
+
+
+def prepare(jobs):
+    <span class="c"># Sort by end day; p[i] = how many earlier jobs end strictly before job i starts</span>
+    jobs = sorted(jobs, key=lambda job: job[1])
+    ends = [end for _, end, _ in jobs]
+    p = [bisect_left(ends, start, 0, i) for i, (start, _, _) in enumerate(jobs)]
+    return jobs, p
+
+
+def best_top_down(jobs):
+    <span class="c"># Top-down: best(i) = most reward using only the first i jobs</span>
+    jobs, p = prepare(jobs)
+    memo = {0: 0}
+
+    def best(i):
+        if i not in memo:
+            reward = jobs[i - 1][2]
+            memo[i] = max(best(i - 1), reward + best(p[i - 1]))
+        return memo[i]
+
+    return best(len(jobs))
+
+
+def best_bottom_up(jobs):
+    <span class="c"># Bottom-up: fill dp[0], dp[1], ..., dp[n] in increasing order</span>
+    jobs, p = prepare(jobs)
+    dp = [0] * (len(jobs) + 1)
+    for i in range(1, len(jobs) + 1):
+        dp[i] = max(dp[i - 1], jobs[i - 1][2] + dp[p[i - 1]])
+    return dp[-1]
+
+
+jobs = [(1, 2, 2), (3, 4, 2), (1, 4, 10), (5, 6, 3)]  <span class="c"># (start, end, reward), inclusive days</span>
+print(best_top_down(jobs), best_bottom_up(jobs))       <span class="c"># 13 13</span>
+print(best_top_down([(1, 2, 5), (2, 3, 6)]), best_bottom_up([(1, 2, 5), (2, 3, 6)]))  <span class="c"># 6 6</span></code></pre></div><div class="code-pane" data-lang="cpp" data-label="C++"><p class="code-label">C++ · projects_two_ways.cpp</p><pre><code>#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+using Job = array&lt;long long, 3&gt;;  <span class="c">// start, end, reward (inclusive days)</span>
+vector&lt;Job&gt; jobs;
+vector&lt;int&gt; p;                    <span class="c">// p[i] = earlier jobs that end before job i starts</span>
+vector&lt;long long&gt; memo;           <span class="c">// -1 means &quot;not computed yet&quot;</span>
+
+void prepare(vector&lt;Job&gt; input) {
+    sort(input.begin(), input.end(), [](const Job&amp; x, const Job&amp; y) { return x[1] &lt; y[1]; });
+    jobs = input;
+    vector&lt;long long&gt; ends;
+    for (auto&amp; job : jobs) ends.push_back(job[1]);
+    p.assign(jobs.size(), 0);
+    for (int i = 0; i &lt; (int)jobs.size(); i++)
+        p[i] = lower_bound(ends.begin(), ends.begin() + i, jobs[i][0]) - ends.begin();
+}
+
+<span class="c">// Top-down: best(i) = most reward using only the first i jobs</span>
+long long best(int i) {
+    if (i == 0) return 0;
+    if (memo[i] != -1) return memo[i];
+    return memo[i] = max(best(i - 1), jobs[i - 1][2] + best(p[i - 1]));
+}
+
+long long bestTopDown(const vector&lt;Job&gt;&amp; input) {
+    prepare(input);
+    memo.assign(jobs.size() + 1, -1);
+    return best(jobs.size());
+}
+
+<span class="c">// Bottom-up: fill dp[0], dp[1], ..., dp[n] in increasing order</span>
+long long bestBottomUp(const vector&lt;Job&gt;&amp; input) {
+    prepare(input);
+    vector&lt;long long&gt; dp(jobs.size() + 1, 0);
+    for (int i = 1; i &lt;= (int)jobs.size(); i++)
+        dp[i] = max(dp[i - 1], jobs[i - 1][2] + dp[p[i - 1]]);
+    return dp[jobs.size()];
+}
+
+int main() {
+    vector&lt;Job&gt; demo = {{1, 2, 2}, {3, 4, 2}, {1, 4, 10}, {5, 6, 3}};
+    cout &lt;&lt; bestTopDown(demo) &lt;&lt; &quot; &quot; &lt;&lt; bestBottomUp(demo) &lt;&lt; &quot;\n&quot;;  <span class="c">// 13 13</span>
+    vector&lt;Job&gt; overlap = {{1, 2, 5}, {2, 3, 6}};
+    cout &lt;&lt; bestTopDown(overlap) &lt;&lt; &quot; &quot; &lt;&lt; bestBottomUp(overlap) &lt;&lt; &quot;\n&quot;;  <span class="c">// 6 6</span>
+}</code></pre></div><div class="code-pane" data-lang="java" data-label="Java"><p class="code-label">Java · ProjectsTwoWays.java</p><pre><code>import java.util.Arrays;
+
+public class ProjectsTwoWays {
+    static long[][] jobs;  <span class="c">// each job: {start, end, reward}, inclusive days</span>
+    static int[] p;        <span class="c">// p[i] = earlier jobs that end before job i starts</span>
+    static long[] memo;    <span class="c">// -1 means &quot;not computed yet&quot;</span>
+
+    static void prepare(long[][] input) {
+        jobs = input.clone();
+        Arrays.sort(jobs, (x, y) -&gt; Long.compare(x[1], y[1]));
+        p = new int[jobs.length];
+        for (int i = 0; i &lt; jobs.length; i++) {
+            int lo = 0, hi = i;  <span class="c">// first earlier index whose end &gt;= start</span>
+            while (lo &lt; hi) {
+                int mid = (lo + hi) / 2;
+                if (jobs[mid][1] &lt; jobs[i][0]) lo = mid + 1; else hi = mid;
+            }
+            p[i] = lo;
+        }
+    }
+
+    <span class="c">// Top-down: best(i) = most reward using only the first i jobs</span>
+    static long best(int i) {
+        if (i == 0) return 0;
+        if (memo[i] != -1) return memo[i];
+        return memo[i] = Math.max(best(i - 1), jobs[i - 1][2] + best(p[i - 1]));
+    }
+
+    static long bestTopDown(long[][] input) {
+        prepare(input);
+        memo = new long[jobs.length + 1];
+        Arrays.fill(memo, -1);
+        return best(jobs.length);
+    }
+
+    <span class="c">// Bottom-up: fill dp[0], dp[1], ..., dp[n] in increasing order</span>
+    static long bestBottomUp(long[][] input) {
+        prepare(input);
+        long[] dp = new long[jobs.length + 1];
+        for (int i = 1; i &lt;= jobs.length; i++)
+            dp[i] = Math.max(dp[i - 1], jobs[i - 1][2] + dp[p[i - 1]]);
+        return dp[jobs.length];
+    }
+
+    public static void main(String[] args) {
+        long[][] demo = {{1, 2, 2}, {3, 4, 2}, {1, 4, 10}, {5, 6, 3}};
+        System.out.println(bestTopDown(demo) + &quot; &quot; + bestBottomUp(demo));  <span class="c">// 13 13</span>
+        long[][] overlap = {{1, 2, 5}, {2, 3, 6}};
+        System.out.println(bestTopDown(overlap) + &quot; &quot; + bestBottomUp(overlap));  <span class="c">// 6 6</span>
+    }
+}</code></pre></div></div><p class="code-caption">Both functions give 13 for the four projects and 6 when the two jobs overlap on day 2.</p></div><h3>Full program</h3><div class="code-tabs"><div class="code-pane" data-lang="python" data-label="Python"><p class="code-label">Python · projects.py</p><pre><code># Input: n, followed by n triples (start, end, reward).
 # Inclusive days, compatible iff previous end &lt; next start.
 import sys
 from bisect import bisect_left
@@ -35,7 +169,7 @@ def main():
     print(solve(jobs))
 
 if __name__ == &quot;__main__&quot;:
-    main()</code></pre></div><div class="code-pane" data-lang="cpp" data-label="C++"><p class="code-label">projects.cpp · C++17</p><pre><code>#include &lt;iostream&gt;
+    main()</code></pre></div><div class="code-pane" data-lang="cpp" data-label="C++"><p class="code-label">C++ · projects.cpp</p><pre><code>#include &lt;iostream&gt;
 #include &lt;vector&gt;
 #include &lt;algorithm&gt;
 using namespace std;
@@ -61,7 +195,7 @@ int main(){
     vector&lt;Job&gt; jobs(n);
     for(auto&amp; j:jobs)cin&gt;&gt;j.s&gt;&gt;j.e&gt;&gt;j.w;
     cout&lt;&lt;solve(jobs)&lt;&lt;'\n';
-}</code></pre></div><div class="code-pane" data-lang="java" data-label="Java"><p class="code-label">Projects.java</p><pre><code>import java.io.*;
+}</code></pre></div><div class="code-pane" data-lang="java" data-label="Java"><p class="code-label">Java · Projects.java</p><pre><code>import java.io.*;
 import java.util.*;
 public class Projects {
     static long solve(long[][] jobs){

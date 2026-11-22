@@ -103,7 +103,7 @@ PAGE = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Problem Driven Programming (R1UC544B): problem-first interactive lectures on algorithms, greedy methods and dynamic programming, for self-study and revision.">
 <title>Problem Driven Programming · R1UC544B</title>
-<link rel="stylesheet" href="assets/site.css?v=2"><script src="assets/site.js?v=2" defer></script></head>
+<link rel="stylesheet" href="assets/site.css?v=3"><script src="assets/site.js?v=2" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap nav"><a class="brand" href="#home"><span>DP</span><span>Problem Driven Programming<small>R1UC544B · COURSE COMPANION</small></span></a>
 <nav class="navlinks" aria-label="Main navigation"><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="lectures/27-study.html">Open Lecture 27</a></nav></div></header>

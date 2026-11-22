@@ -19,9 +19,11 @@ h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ac
 p,ul,ol,dl{margin:0 0 4px}
 ul,ol{padding-left:17px}
 li{margin-bottom:1px}
-dl{display:grid;grid-template-columns:max-content 1fr;gap:2px 8px}
-dt{font-weight:700}
-dd{margin:0}
+dl{margin:0 0 4px}
+dt{display:inline;font-weight:700}
+dt::after{content:": "}
+dd{display:inline;margin:0}
+dd::after{content:"";display:block;margin-bottom:2px}
 .f{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:6px;padding:4px 7px;margin:3px 0 5px}
 table{width:100%;border-collapse:collapse;font-size:12.5px;margin:2px 0 5px}
 th,td{border:1px solid var(--line);padding:2px 5px;text-align:left;vertical-align:top}
@@ -54,14 +56,16 @@ footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size
 
 <section><h2>Recurrences from this lecture</h2>
 <div class="f">F(0)=0, F(1)=1, F(n)=F(n−1)+F(n−2)<br>W(0)=W(1)=1, W(n)=W(n−1)+W(n−2)<br>dp[0]=0, dp[a]=1+min dp[a−c], c ≤ a<br>J(T)=0, J(v)=min [w(v,u)+J(u)]</div>
-<p>F = Fibonacci · W = ways to climb (1 or 2 steps) · dp = fewest coins · J = cheapest cost to the target.</p></section>
+<p>F Fibonacci · W stairs (1 or 2 steps) · dp fewest coins · J cost to target.</p></section>
 
 <section><h2>Numbers worth remembering</h2>
 <table><tr><th>n</th><td class="n">0</td><td class="n">1</td><td class="n">2</td><td class="n">3</td><td class="n">4</td><td class="n">5</td><td class="n">6</td></tr>
 <tr><th>F(n)</th><td class="n">0</td><td class="n">1</td><td class="n">1</td><td class="n">2</td><td class="n">3</td><td class="n">5</td><td class="n">8</td></tr>
 <tr><th>W(n)</th><td class="n">1</td><td class="n">1</td><td class="n">2</td><td class="n">3</td><td class="n">5</td><td class="n">8</td><td class="n">13</td></tr>
 <tr><th>calls</th><td class="n">1</td><td class="n">1</td><td class="n">3</td><td class="n">5</td><td class="n">9</td><td class="n">15</td><td class="n">25</td></tr></table>
-<p>calls = naive recursive calls for F(n) = 2F(n+1) − 1. F(5): 15 calls, 6 distinct states, 9 repeats.</p></section>
+<p>calls = naive calls = 2F(n+1) − 1. F(5): 15 calls, 6 states.</p></section>
+
+<section><h2>Top-down vs bottom-up</h2><p><b>Top-down:</b> start at the answer, recurse, store each result in a memo; solves only the states needed, but deep recursion can overflow the stack. <b>Bottom-up:</b> start at the base cases and fill the table with loops in dependency order; no recursion. Same states, same recurrence, same answer.</p></section>
 
 <section><h2>Complexity</h2>
 <table><tr><th>Method</th><th>Time</th><th>Extra space</th></tr>
@@ -76,17 +80,17 @@ footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size
 <tr><td>{1,3,4}, 6</td><td>4+1+1 (3)</td><td>3+3 (2)</td></tr>
 <tr><td>{1,4,6}, 8</td><td>6+1+1 (3)</td><td>4+4 (2)</td></tr>
 <tr><td>{3,4}, 6</td><td>stuck at 2</td><td>3+3 (2)</td></tr></table>
-<p>One counterexample disproves greedy. Indian coins {1,2,5,10} happen to be safe for greedy.</p></section>
+<p>One counterexample disproves greedy; Indian coins {1,2,5,10} are safe.</p></section>
 
 <section><h2>Greedy vs divide and conquer vs DP</h2>
 <table><tr><th></th><th>Greedy</th><th>D&amp;C</th><th>DP</th></tr>
-<tr><th>Idea</th><td>One safe local choice</td><td>Split into separate parts</td><td>Reuse shared subproblems</td></tr>
-<tr><th>Needs</th><td>Proof the choice is safe</td><td>Correct split and merge</td><td>Recurrence, base cases, order</td></tr>
+<tr><th>Idea</th><td>One safe local choice</td><td>Split into parts</td><td>Reuse shared subproblems</td></tr>
+<tr><th>Needs</th><td>Safe-choice proof</td><td>Split and merge</td><td>Recurrence and order</td></tr>
 <tr><th>Example</th><td>Activity selection</td><td>Merge sort</td><td>Coin change, knapsack</td></tr></table></section>
 
 <section><h2>Is it a DP problem? Ask four questions</h2><ol>
-<li>Can I describe a smaller version of the same problem?</li>
-<li>Do correct smaller answers combine into this answer?</li>
+<li>Is there a smaller version of the same problem?</li>
+<li>Do smaller answers combine into this one?</li>
 <li>Do different choices reach the same states?</li>
 <li>Are there few enough states to store?</li></ol></section>
 
@@ -95,10 +99,9 @@ footer{margin-top:6px;border-top:1px solid var(--line);padding-top:4px;font-size
 <li class="warn">“Minimum/maximum, so DP.” Keywords are clues; justify with states and a recurrence.</li>
 <li class="warn">“Optimal substructure proves greedy works.” Greedy also needs its choice to be safe.</li>
 <li class="warn">State too small: a route with a fuel limit needs (place, fuel), not just place.</li>
-<li class="warn">Counting calls vs states: F(5) has 15 calls but 6 states.</li></ul></section>
+<li class="warn">Calls vs states: F(5) makes 15 calls but has 6 states.</li></ul></section>
 
-<section><h2>Writing a full-marks answer</h2><ol>
-<li>Define the state in words.</li><li>Write base cases and the recurrence.</li><li>Show the table filled in order.</li><li>State the final answer clearly.</li><li>Give time and space complexity.</li></ol></section>
+<section><h2>Writing a full-marks answer</h2><p>Define the state in words → base cases and recurrence → table filled in order → final answer → time and space.</p></section>
 
 </div>
 <footer><span>Practice: LeetCode 70, 509, 746, 322 · CSES 1633, 1634</span><span>Next: Lecture 20 · memoization and tabulation</span></footer>

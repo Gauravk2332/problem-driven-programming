@@ -8,3 +8,4 @@ ol.flow{list-style:none;margin:0;padding:0}
 #catalog .module[hidden],#catalog .lesson[hidden]{display:none}
 @media(max-width:860px){.modes{grid-template-columns:1fr}.lesson.published{margin:0 -14px;padding-left:14px;padding-right:14px}}
 ol.flow{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:860px){ol.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){ol.flow{grid-template-columns:1fr}}
+.filters select,.filters input{max-width:100%;min-width:0}
