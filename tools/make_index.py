@@ -119,14 +119,14 @@ PAGE = f"""<!doctype html>
 <link rel="stylesheet" href="assets/site.css?v=3"><script src="assets/site.js?v=2" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap nav"><a class="brand" href="#home"><span>DP</span><span>Problem Driven Programming<small>R1UC544B · COURSE COMPANION</small></span></a>
-<nav class="navlinks" aria-label="Main navigation"><a href="student.html#module-1">Student view</a><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="lectures/27-study.html">Open Lecture 27</a></nav></div></header>
+<nav class="navlinks" aria-label="Main navigation"><a href="student.html">Student view</a><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="student.html">Start learning</a></nav></div></header>
 <main id="main">
 <div class="hero" id="home"><div class="wrap hero-grid"><div>
 <p class="kicker">R1UC544B · Problem Driven Programming</p>
 <h1>Start with a problem.<br>Discover the algorithm.</h1>
 <p>Each lecture opens with a concrete problem you can attempt on paper, lets you find the technique by trying it, and only then states the theory, the code and the complexity. It covers the R1UC544B syllabus from algorithm analysis to dynamic programming.</p>
 <p class="hero-meta">You need: one programming language (C++, Java or Python), arrays, functions and basic recursion.</p>
-<div class="actions"><a class="btn" href="lectures/27-study.html">Study Lecture 27 →</a><a class="btn secondary" href="lectures/27.html">Lecture 27 class view</a></div></div>
+<div class="actions"><a class="btn" href="student.html">Open student lectures →</a><a class="btn secondary" href="#lectures">Browse course catalog</a></div></div>
 <div class="visual">{HERO_SVG}<div class="visual-caption">From Lecture 19: the same subproblem, F(3), solved twice.</div></div></div></div>
 <div class="stats"><div class="wrap stat-grid">
 <div class="stat"><strong>{LIVE} of {TOTAL}</strong><span>Lectures published</span></div>
