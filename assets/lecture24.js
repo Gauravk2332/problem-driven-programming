@@ -1,7 +1,7 @@
 "use strict";
 (()=>{
 function model(a){
- if(!Array.isArray(a)||a.length>16||a.some(x=>!Number.isInteger(x)||Math.abs(x)>99))throw Error("Use up to 16 integers between −99 and 99.");
+ if(!Array.isArray(a)||a.length>16||a.some(x=>!Number.isInteger(x)||Math.abs(x)>999))throw Error("Use up to 16 integers between −999 and 999.");
  const n=a.length,d=Array(n).fill(1),p=Array(n).fill(-1),events=[{i:-1,j:-1,d:Array(n).fill(null),p:[...p],message:"No elements processed."}];let best=-1;
  for(let i=0;i<n;i++){const snapshot=()=>d.map((v,j)=>j<=i?v:null);events.push({i,j:-1,d:snapshot(),p:[...p],message:"Initialize dp["+i+"] = 1: the element alone."});for(let j=0;j<i;j++){const legal=a[j]<a[i],improve=legal&&d[j]+1>d[i];if(improve){d[i]=d[j]+1;p[i]=j}events.push({i,j,d:snapshot(),p:[...p],message:legal?"Extend length "+d[j]+" + 1; "+(improve?"improve to "+d[i]:"keep "+d[i]):a[j]+" is not strictly smaller than "+a[i]+". Reject."})}if(best<0||d[i]>d[best])best=i}
  const chosen=[];for(let i=best;i>=0;i=p[i])chosen.unshift(i);
@@ -11,7 +11,7 @@ function model(a){
  const fastChosen=[];for(let i=ends.at(-1)??-1;i>=0;i=parent[i])fastChosen.unshift(i);
  return {d,p,best,length:best<0?0:d[best],chosen,events,tails,fast,fastChosen,parent};
 }
-function parse(raw){const q=raw.trim()?raw.trim().split(/\s*,\s*/):[];if(q.some(x=>! /^-?\d{1,2}$/.test(x)))throw Error("Use comma-separated integers between −99 and 99.");const a=q.map(Number);model(a);return a}
+function parse(raw){const q=raw.trim()?raw.trim().split(/\s*,\s*/):[];if(q.some(x=>! /^-?\d{1,3}$/.test(x)))throw Error("Use comma-separated integers between −999 and 999.");const a=q.map(Number);model(a);return a}
 globalThis.PDP24={model,parse};if(typeof document==="undefined")return;
 const el=(tag,cls,t)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(t!=null)x.textContent=t;return x},controllers=[];
 for(const root of document.querySelectorAll("[data-lis24]")){
