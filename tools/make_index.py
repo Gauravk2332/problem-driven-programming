@@ -75,7 +75,7 @@ def catalog():
                     f'<span class="lesson-code">{num:02d}</span><div class="lesson-body">'
                     f'<strong><a href="{study}">{e(name)}</a></strong><span>{e(topics)}</span></div>'
                     f'<div class="actions"><a class="tag focus" href="{study}">Study</a>'
-                    f'<a class="tag" href="{teach}">Class view</a></div></li>'
+                    f'<a class="tag" href="{teach}">Class view</a><a class="tag" href="lectures/{num}-revision.html">Revision sheet</a></div></li>'
                 )
             else:
                 out.append(

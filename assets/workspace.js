@@ -44,11 +44,18 @@
 
   try {
     const raw = localStorage.getItem(key);
-    if (revision) legacyRaw = localStorage.getItem(legacyKey);
+    // Work saved for an earlier version of this lecture's text: the whiteboard carries over;
+    // the old page annotations would no longer line up, so they are offered as a download.
+    let oldKey = null;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k !== key && (k === legacyKey || k.startsWith(legacyKey + ":")) && (!oldKey || oldKey === legacyKey)) oldKey = k;
+    }
+    if (oldKey) legacyRaw = localStorage.getItem(oldKey);
     if (raw) saved = JSON.parse(raw) || {};
     else if (legacyRaw) {
       const old = JSON.parse(legacyRaw) || {};
-      saved = { pages: old.pages, paper: old.paper };
+      saved = { board: old.board, pages: old.pages, paper: old.paper, boardView: old.boardView };
     }
   } catch {
     storageOK = false;

@@ -1,0 +1,17 @@
+/* Self-checking tables and exam question set (Lecture pages). */
+.table-check{border:1px solid #cbd8e3;background:#f7f9fc;border-radius:12px;padding:16px 18px;margin:20px 0}
+.table-check h3{margin-top:0}
+.table-check input[data-cell]{width:3.2em;padding:5px 4px;text-align:center;font:600 16px system-ui,sans-serif;border:1px solid #9fb2c4;border-radius:7px;background:#fff}
+.table-check input.tc-ok{border-color:#0f7b55;background:#e6f6ee}
+.table-check input.tc-bad{border-color:#b42318;background:#fdecea}
+.table-check .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tc-feedback{margin:10px 0 0;font-weight:600;color:#8a2a1e}
+.tc-feedback.tc-good{color:#0f6b4b}
+.exam-set .exam-group{margin:22px 0 8px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.exam-set .exam-group span{font-size:13px;color:#52647a;font-weight:600}
+.exam-set .practice-q h4{margin:0 0 6px;font-size:16px}
+.exam-set .marks{display:inline-block;margin-left:6px;font:700 12px system-ui,sans-serif;color:#005c55;background:#e5f3f0;border-radius:20px;padding:2px 8px;vertical-align:middle}
+.exam-set .mark-split{font-size:14px;color:#52647a;border-top:1px dashed #cbd8e3;margin-top:8px;padding-top:6px}
+.exam-set ol.answer-steps{margin:6px 0;padding-left:22px}
+.exam-tips{border-left:3px solid #006e68;background:#edf5f4;border-radius:0 9px 9px 0;padding:10px 14px;margin:14px 0;font-size:15px}
+@media print{.table-check .controls,.tc-feedback{display:none}.exam-set details{display:block}.exam-set details>*{display:block}}

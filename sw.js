@@ -1,7 +1,7 @@
 "use strict";
-const CACHE="pdp-static-v5";
+const CACHE="pdp-static-v6";
 const ROOT=new URL("./",self.location.href);
-const FILES=["","index.html","lectures/19.html","lectures/19-study.html","assets/site.css","assets/site.css?v=2","assets/site.js?v=2","assets/lesson.css","assets/lesson.js?v=4.3","assets/lecture19.js?v=4","assets/ink.css?v=2","assets/classroom.css?v=3.1","assets/workspace.js?v=5.1","assets/board.css?v=3","assets/classroom.js?v=4.3","assets/compact-ui.css?v=4.1","assets/dp19-content.js?v=1","assets/dp19-content.css?v=1","assets/study.css?v=1.1","assets/study.js?v=1","assets/code.css?v=1","assets/code.js?v=1"];
+const FILES=["","index.html","lectures/19.html","lectures/19-study.html","lectures/19-revision.html","assets/site.css","assets/site.css?v=2","assets/site.js?v=2","assets/lesson.css","assets/lesson.js?v=4.3","assets/lecture19.js?v=4","assets/ink.css?v=2","assets/classroom.css?v=3.1","assets/workspace.js?v=5.2","assets/practice.css?v=1","assets/table-check.js?v=1","assets/board.css?v=3","assets/classroom.js?v=4.3","assets/compact-ui.css?v=4.1","assets/dp19-content.js?v=1","assets/dp19-content.css?v=1","assets/study.css?v=1.1","assets/study.js?v=1","assets/code.css?v=1","assets/code.js?v=1"];
 self.addEventListener("install",e=>e.waitUntil(self.skipWaiting()));
 self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
 self.addEventListener("message",e=>{if(!["CACHE_LECTURE_19","CACHE_LECTURE_19_DUAL"].includes(e.data?.type))return;e.waitUntil((async()=>{try{const cache=await caches.open(CACHE);await cache.addAll(FILES.map(p=>new Request(new URL(p,ROOT),{cache:"reload"})));e.ports[0]?.postMessage({ok:true,pack:"dual"})}catch(err){e.ports[0]?.postMessage({ok:false,error:String(err)})}})())});
