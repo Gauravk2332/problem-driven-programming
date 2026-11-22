@@ -8,7 +8,7 @@ import html
 import sys
 from pathlib import Path
 
-PUBLISHED = {1: ("lectures/1-study.html", None), 2: ("lectures/2-study.html", None), 3: ("lectures/3-study.html", None), 4: ("lectures/4-study.html", None), 5: ("lectures/5-study.html", None), 6: ("lectures/6-study.html", None), 7: ("lectures/7-study.html", None), 8: ("lectures/8-study.html", None), 9: ("lectures/9-study.html", None), 10: ("lectures/10-study.html", None), 11: ("lectures/11-study.html", None), 12: ("lectures/12-study.html", None), 13: ("lectures/13-study.html", None), 14: ("lectures/14-study.html", None), 15: ("lectures/15-study.html", None), 16: ("lectures/16-study.html", None), 17: ("lectures/17-study.html", None), 18: ("lectures/18-study.html", None), 19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html"), 21: ("lectures/21-study.html", "lectures/21.html"), 22: ("lectures/22-study.html", "lectures/22.html"), 23: ("lectures/23-study.html", "lectures/23.html"), 24: ("lectures/24-study.html", "lectures/24.html"), 25: ("lectures/25-study.html", "lectures/25.html"), 26: ("lectures/26-study.html", "lectures/26.html"), 27: ("lectures/27-study.html", "lectures/27.html")}
+PUBLISHED = {1: ("lectures/1-study.html", None), 2: ("lectures/2-study.html", None), 3: ("lectures/3-study.html", None), 4: ("lectures/4-study.html", None), 5: ("lectures/5-study.html", None), 6: ("lectures/6-study.html", None), 7: ("lectures/7-study.html", None), 8: ("lectures/8-study.html", None), 9: ("lectures/9-study.html", None), 10: ("lectures/10-study.html", None), 11: ("lectures/11-study.html", None), 12: ("lectures/12-study.html", None), 13: ("lectures/13-study.html", None), 14: ("lectures/14-study.html", None), 15: ("lectures/15-study.html", None), 16: ("lectures/16-study.html", None), 17: ("lectures/17-study.html", None), 18: ("lectures/18-study.html", None), 19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html"), 21: ("lectures/21-study.html", "lectures/21.html"), 22: ("lectures/22-study.html", "lectures/22.html"), 23: ("lectures/23-study.html", "lectures/23.html"), 24: ("lectures/24-study.html", "lectures/24.html"), 25: ("lectures/25-study.html", "lectures/25.html"), 26: ("lectures/26-study.html", "lectures/26.html"), 27: ("lectures/27-study.html", "lectures/27.html"), 28: ("lectures/28-study.html", None), 29: ("lectures/29-study.html", None), 30: ("lectures/30-study.html", None)}
 
 MODULES = [
     ("Algorithm Foundations", [
@@ -48,9 +48,17 @@ MODULES = [
         (26, "Advanced DP Techniques", "Partition DP; bitmask DP; digit DP"),
         (27, "Integrated Problem Solving", "Algorithm selection; optimization; fast I/O; debugging"),
     ]),
+    ("Dynamic Programming Extensions", [
+        (28, "Grid-Based DP", "Unique paths; obstacles; minimum path sum"),
+        (29, "Longest Common Subsequence", "Prefix DP; reconstruction; related string problems"),
+        (30, "State Machine DP", "Non-adjacent selection; stock trading; state transitions"),
+    ]),
 ]
 
 e = html.escape
+
+def group_label(i, title):
+    return f"Supplementary · {e(title)}" if i == len(MODULES) else f"Module {i:02d} · {e(title)}"
 
 
 def catalog():
@@ -63,7 +71,7 @@ def catalog():
         is_open = " open" if live else ""
         out.append(
             f'<details class="module" data-module="{i}"{is_open}><summary><span>'
-            f'Module {i:02d} · {e(title)}<small>{rng} · {len(lessons)} lectures · {status}</small>'
+            f'{group_label(i, title)}<small>{rng} · {len(lessons)} lectures · {status}</small>'
             f'</span></summary><ol class="lesson-list">'
         )
         for num, name, topics in lessons:
@@ -93,7 +101,7 @@ def catalog():
 
 def module_options():
     return "".join(
-        f'<option value="{i}">Module {i:02d} · {e(t)}</option>' for i, (t, _) in enumerate(MODULES, 1)
+        f'<option value="{i}">{group_label(i, t)}</option>' for i, (t, _) in enumerate(MODULES, 1)
     )
 
 
@@ -120,11 +128,11 @@ PAGE = f"""<!doctype html>
 <div class="visual">{HERO_SVG}<div class="visual-caption">From Lecture 19: the same subproblem, F(3), solved twice.</div></div></div></div>
 <div class="stats"><div class="wrap stat-grid">
 <div class="stat"><strong>{LIVE} of {TOTAL}</strong><span>Lectures published</span></div>
-<div class="stat"><strong>{len(MODULES)}</strong><span>Syllabus modules</span></div>
+<div class="stat"><strong>{len(MODULES)-1}</strong><span>Syllabus modules</span></div>
 <div class="stat"><strong>2</strong><span>Learning modes: Study; Class view where available</span></div></div></div>
 <div class="wrap">
-<section id="lectures" aria-labelledby="lectures-h"><p class="kicker">01 / Course roadmap</p><h2 id="lectures-h">All 27 lectures</h2>
-<p class="section-intro">All 27 student lectures are available. Lectures 1–18 include revision inside Study mode; Lectures 19–27 also offer Class view and separate revision sheets.</p>
+<section id="lectures" aria-labelledby="lectures-h"><p class="kicker">01 / Course roadmap</p><h2 id="lectures-h">All 27 core + 3 supplementary lectures</h2>
+<p class="section-intro">All 27 core student lectures are available. Lectures 1–18 include revision inside Study mode; Lectures 19–27 also offer Class view and separate revision sheets. Optional Lectures 28–30 extend DP with grid paths, longest common subsequence and state machines.</p>
 <div class="filters" id="filters" hidden><label for="search">Search</label><input type="search" id="search" placeholder="knapsack, hashing, complexity…"><label for="module-filter">Module</label><select id="module-filter"><option value="all">All modules</option>{module_options()}</select></div>
 <p class="result-count" id="result-count" aria-live="polite"></p>
 <div id="catalog">{catalog()}</div><p class="empty" id="catalog-empty" hidden>No matching lectures. Try another keyword.</p></section>
@@ -145,7 +153,7 @@ PAGE = f"""<!doctype html>
 <div class="card demo"><div><span class="tag focus">From Lecture 19</span><h3 style="margin-top:9px">Reuse the last two answers</h3><p>Start from the base cases F(0) and F(1). Each new value needs only the two values already in the table, so nothing is computed twice. <a href="lectures/20-study.html#tab">Lecture 20</a> turns this idea into a complete design process.</p>
 <div class="demo-controls"><button id="reset" type="button">Reset</button><button id="prev" type="button">Previous</button><button class="primary" id="play" type="button" aria-pressed="false">Play</button><button id="next" type="button">Next</button></div></div>
 <div><div id="cells" class="cells" aria-label="Fibonacci table"></div><p id="demo-status" class="demo-status" aria-live="polite">Enable JavaScript to step through the table.</p></div></div>
-<p class="note">Lecture 19 has four full labs: a recursion tree, a bottom-up table, a work-count comparison and a greedy-versus-DP coin table. <a href="lectures/19-study.html#discover">Open the recursion tree lab</a>. Lecture 20 has three linked labs: <a href="lectures/20-study.html#memo">memoization</a>, <a href="lectures/20-study.html#tab">tabulation</a> and <a href="lectures/20-study.html#rolling">rolling state</a>. Lecture 21 builds a <a href="lectures/21-study.html#table">2D knapsack table</a> and explores <a href="lectures/21-study.html#rolling">capacity loop direction</a>. Lecture 22 compares <a href="lectures/22-study.html#unbounded">unbounded knapsack</a> and <a href="lectures/22-study.html#combinations">coin-counting loops</a>. Lecture 23 builds a <a href="lectures/23-study.html#table">Boolean DP table</a> and tests <a href="lectures/23-study.html#partition">equal partitions</a>. Lecture 24 traces <a href="lectures/24-study.html#table">endpoint DP</a> and <a href="lectures/24-study.html#binary">minimum tails</a>. Lecture 25 builds an <a href="lectures/25-study.html#table">edit-distance matrix</a> and <a href="lectures/25-study.html#script">executes an optimal edit script</a>. Lecture 26 explores <a href="lectures/26-study.html#interval-table">matrix-chain splits</a>, <a href="lectures/26-study.html#mask-table">assignment masks</a> and <a href="lectures/26-study.html#digit">bounded digits</a>. Lecture 27 connects <a href="lectures/27-study.html#trace">weighted scheduling</a> with <a href="lectures/27-study.html#stress">differential testing</a>. All nine lectures of the DP learning path are now published.</p></section>
+<p class="note">Lecture 19 has four full labs: a recursion tree, a bottom-up table, a work-count comparison and a greedy-versus-DP coin table. <a href="lectures/19-study.html#discover">Open the recursion tree lab</a>. Lecture 20 has three linked labs: <a href="lectures/20-study.html#memo">memoization</a>, <a href="lectures/20-study.html#tab">tabulation</a> and <a href="lectures/20-study.html#rolling">rolling state</a>. Lecture 21 builds a <a href="lectures/21-study.html#table">2D knapsack table</a> and explores <a href="lectures/21-study.html#rolling">capacity loop direction</a>. Lecture 22 compares <a href="lectures/22-study.html#unbounded">unbounded knapsack</a> and <a href="lectures/22-study.html#combinations">coin-counting loops</a>. Lecture 23 builds a <a href="lectures/23-study.html#table">Boolean DP table</a> and tests <a href="lectures/23-study.html#partition">equal partitions</a>. Lecture 24 traces <a href="lectures/24-study.html#table">endpoint DP</a> and <a href="lectures/24-study.html#binary">minimum tails</a>. Lecture 25 builds an <a href="lectures/25-study.html#table">edit-distance matrix</a> and <a href="lectures/25-study.html#script">executes an optimal edit script</a>. Lecture 26 explores <a href="lectures/26-study.html#interval-table">matrix-chain splits</a>, <a href="lectures/26-study.html#mask-table">assignment masks</a> and <a href="lectures/26-study.html#digit">bounded digits</a>. Lecture 27 connects <a href="lectures/27-study.html#trace">weighted scheduling</a> with <a href="lectures/27-study.html#stress">differential testing</a>. The nine core DP lectures are complete. Explore the optional <a href="lectures/28-study.html#cost">grid path lab</a>, <a href="lectures/29-study.html#table">LCS matrix</a> and <a href="lectures/30-study.html#stocktrace">stock state machine</a>.</p></section>
 <section id="resources" aria-labelledby="resources-h"><p class="kicker">04 / Further learning</p><h2 id="resources-h">Where to go next</h2>
 <p class="section-intro">Outside resources that pair well with specific lectures. Course pages are written independently of them.</p>
 <div class="cards resources">
