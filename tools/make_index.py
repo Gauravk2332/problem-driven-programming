@@ -8,7 +8,7 @@ import html
 import sys
 from pathlib import Path
 
-PUBLISHED = {19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html"), 21: ("lectures/21-study.html", "lectures/21.html"), 22: ("lectures/22-study.html", "lectures/22.html"), 23: ("lectures/23-study.html", "lectures/23.html"), 24: ("lectures/24-study.html", "lectures/24.html"), 25: ("lectures/25-study.html", "lectures/25.html"), 26: ("lectures/26-study.html", "lectures/26.html"), 27: ("lectures/27-study.html", "lectures/27.html")}
+PUBLISHED = {12: ("lectures/12-study.html", None), 13: ("lectures/13-study.html", None), 14: ("lectures/14-study.html", None), 15: ("lectures/15-study.html", None), 16: ("lectures/16-study.html", None), 17: ("lectures/17-study.html", None), 18: ("lectures/18-study.html", None), 19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html"), 21: ("lectures/21-study.html", "lectures/21.html"), 22: ("lectures/22-study.html", "lectures/22.html"), 23: ("lectures/23-study.html", "lectures/23.html"), 24: ("lectures/24-study.html", "lectures/24.html"), 25: ("lectures/25-study.html", "lectures/25.html"), 26: ("lectures/26-study.html", "lectures/26.html"), 27: ("lectures/27-study.html", "lectures/27.html")}
 
 MODULES = [
     ("Algorithm Foundations", [
@@ -70,12 +70,15 @@ def catalog():
             search = e(f"{num} {name} {topics} {title}".lower())
             if num in PUBLISHED:
                 study, teach = PUBLISHED[num]
+                revision = f"lectures/{num}-revision.html" if teach else f"{study}#revision"
+                extra = f'<a class="tag" href="{teach}">Class view</a>' if teach else ""
+                revision_label = "Revision sheet" if teach else "Revision"
                 out.append(
                     f'<li class="lesson published" data-search="{search}">'
                     f'<span class="lesson-code">{num:02d}</span><div class="lesson-body">'
                     f'<strong><a href="{study}">{e(name)}</a></strong><span>{e(topics)}</span></div>'
                     f'<div class="actions"><a class="tag focus" href="{study}">Study</a>'
-                    f'<a class="tag" href="{teach}">Class view</a><a class="tag" href="lectures/{num}-revision.html">Revision sheet</a></div></li>'
+                    f'{extra}<a class="tag" href="{revision}">{revision_label}</a></div></li>'
                 )
             else:
                 out.append(
@@ -106,7 +109,7 @@ PAGE = f"""<!doctype html>
 <link rel="stylesheet" href="assets/site.css?v=3"><script src="assets/site.js?v=2" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap nav"><a class="brand" href="#home"><span>DP</span><span>Problem Driven Programming<small>R1UC544B · COURSE COMPANION</small></span></a>
-<nav class="navlinks" aria-label="Main navigation"><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="lectures/27-study.html">Open Lecture 27</a></nav></div></header>
+<nav class="navlinks" aria-label="Main navigation"><a href="student.html#module-4">Student view</a><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="lectures/27-study.html">Open Lecture 27</a></nav></div></header>
 <main id="main">
 <div class="hero" id="home"><div class="wrap hero-grid"><div>
 <p class="kicker">R1UC544B · Problem Driven Programming</p>
@@ -118,15 +121,15 @@ PAGE = f"""<!doctype html>
 <div class="stats"><div class="wrap stat-grid">
 <div class="stat"><strong>{LIVE} of {TOTAL}</strong><span>Lectures published</span></div>
 <div class="stat"><strong>{len(MODULES)}</strong><span>Syllabus modules</span></div>
-<div class="stat"><strong>2</strong><span>Ways to learn each lecture: Study and Class view</span></div></div></div>
+<div class="stat"><strong>2</strong><span>Learning modes: Study; Class view where available</span></div></div></div>
 <div class="wrap">
 <section id="lectures" aria-labelledby="lectures-h"><p class="kicker">01 / Course roadmap</p><h2 id="lectures-h">All 27 lectures</h2>
-<p class="section-intro">Lectures 01–18 follow the existing course outline. Lectures 19–27 group the dynamic programming topics into one sequence. Lectures are published one at a time; anything marked “Coming” has no page yet.</p>
+<p class="section-intro">Lectures 12–18 are available in student Study mode, with revision inside each lesson. Lectures 19–27 offer Study, Class view and revision sheets. Anything marked “Coming” is not published.</p>
 <div class="filters" id="filters" hidden><label for="search">Search</label><input type="search" id="search" placeholder="knapsack, hashing, complexity…"><label for="module-filter">Module</label><select id="module-filter"><option value="all">All modules</option>{module_options()}</select></div>
 <p class="result-count" id="result-count" aria-live="polite"></p>
 <div id="catalog">{catalog()}</div><p class="empty" id="catalog-empty" hidden>No matching lectures. Try another keyword.</p></section>
 <section id="format" aria-labelledby="format-h"><p class="kicker">02 / How a lecture works</p><h2 id="format-h">One problem, six steps</h2>
-<p class="section-intro">Every published lecture follows the same order, so students always know what comes next. Lecture 19 builds DP intuition; Lecture 20 derives a minimum-energy jump recurrence, then compares memoization, tabulation and rolling storage. Lecture 21 develops two-dimensional 0/1 Knapsack, including item reconstruction and memory optimization. Lecture 22 allows repeated selection and distinguishes minimum coins, unordered combinations and ordered sequences. Lecture 23 introduces Boolean feasibility, subset reconstruction and equal partition. Lecture 24 introduces sequence DP and binary-search optimization. Lecture 25 develops two-prefix string DP, edit-script reconstruction and rolling rows. Lecture 26 introduces interval, bitmask and digit DP. Lecture 27 integrates algorithm selection, weighted scheduling, fast I/O and systematic testing.</p>
+<p class="section-intro">Every published lecture follows a problem-first learning path. Module 04 covers greedy strategy, fractional knapsack, intervals, jobs, heaps, scheduling and correctness. Lecture 19 builds DP intuition; Lecture 20 derives a minimum-energy jump recurrence, then compares memoization, tabulation and rolling storage. Lecture 21 develops two-dimensional 0/1 Knapsack, including item reconstruction and memory optimization. Lecture 22 allows repeated selection and distinguishes minimum coins, unordered combinations and ordered sequences. Lecture 23 introduces Boolean feasibility, subset reconstruction and equal partition. Lecture 24 introduces sequence DP and binary-search optimization. Lecture 25 develops two-prefix string DP, edit-script reconstruction and rolling rows. Lecture 26 introduces interval, bitmask and digit DP. Lecture 27 integrates algorithm selection, weighted scheduling, fast I/O and systematic testing.</p>
 <ol class="flow">
 <li class="card"><span class="number">01</span><h3>Problem</h3><p>A concrete question to try before any definition.</p></li>
 <li class="card"><span class="number">02</span><h3>Discover</h3><p>Brute force first, then an interactive lab shows where it wastes work.</p></li>
