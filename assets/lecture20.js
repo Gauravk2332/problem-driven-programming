@@ -35,8 +35,11 @@ for(const root of document.querySelectorAll("[data-dp20-lab]")){
  }
  const events=()=>kind==="memo"?m.events:kind==="tab"?m.tab:m.roll;
  const step=window.lessonStepper(root,{length:()=>events().length,render,delay:750});steps.push(step);
- function apply(){try{const chunks=input.value.trim().split(/\s*,\s*|\s+/);if(!chunks.length||chunks.some(x=>!/^\d{1,2}$/.test(x)))throw Error("Enter 1–10 heights (0–99), separated by commas or spaces.");m=model(chunks.map(Number));error.textContent="";step.reset()}catch(e){error.textContent=e.message;}}
- root.querySelector("[data-apply]").onclick=apply;input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();apply()}});root.querySelector("[data-end]").onclick=()=>step.end();
+ const applyButton=root.querySelector("[data-apply]");
+ function parseHeights(){const chunks=input.value.trim().split(/\s*,\s*|\s+/);if(!chunks.length||chunks.some(x=>!/^\d{1,2}$/.test(x)))throw Error("Invalid heights. Enter 1–10 integers from 0 to 99, separated by commas or spaces.");return model(chunks.map(Number))}
+ function validate(){try{const next=parseHeights();error.textContent="";input.setAttribute("aria-invalid","false");applyButton.disabled=false;return next}catch(e){error.textContent=e.message+" The lab still shows the last applied heights.";input.setAttribute("aria-invalid","true");applyButton.disabled=true;return null}}
+ function apply(){const next=validate();if(!next)return;m=next;step.reset()}
+ input.addEventListener("input",validate);input.addEventListener("change",validate);applyButton.onclick=apply;input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();apply()}});root.querySelector("[data-end]").onclick=()=>step.end();
 }
 document.addEventListener("lecture-section-change",()=>steps.forEach(s=>s.stop()));document.addEventListener("visibilitychange",()=>{if(document.hidden)steps.forEach(s=>s.stop())});
 /* Generic table exercises: answer computed from the same model, not embedded guesses. */
