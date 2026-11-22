@@ -20,16 +20,20 @@
       const id = `code-${n}-${i}`;
       pane.id = id;
       pane.setAttribute("role", "tabpanel");
+      pane.setAttribute("aria-labelledby", id+"-tab");
+      pane.tabIndex=0;
       const tab = document.createElement("button");
       tab.type = "button";
       tab.className = "code-tab";
       tab.setAttribute("role", "tab");
+      tab.id=id+"-tab";
       tab.setAttribute("aria-controls", id);
       tab.textContent = pane.dataset.label;
       tab.addEventListener("click", () => block._select(pane.dataset.lang, true));
       tab.addEventListener("keydown", e => {
-        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-        const j = (i + (e.key === "ArrowRight" ? 1 : panes.length - 1)) % panes.length;
+        if (!["ArrowRight","ArrowLeft","Home","End"].includes(e.key)) return;
+        e.preventDefault();
+        const j = e.key==="Home"?0:e.key==="End"?panes.length-1:(i + (e.key === "ArrowRight" ? 1 : panes.length - 1)) % panes.length;
         block._select(panes[j].dataset.lang, true);
         tabs[j].focus();
       });
@@ -40,6 +44,7 @@
     copy.type = "button";
     copy.className = "code-copy";
     copy.textContent = "Copy";
+    copy.setAttribute("aria-live","polite");
     copy.addEventListener("click", async () => {
       const pane = panes.find(p => !p.hidden);
       try {
