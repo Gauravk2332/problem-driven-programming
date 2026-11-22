@@ -8,7 +8,7 @@ import html
 import sys
 from pathlib import Path
 
-PUBLISHED = {19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html")}
+PUBLISHED = {19: ("lectures/19-study.html", "lectures/19.html"), 20: ("lectures/20-study.html", "lectures/20.html"), 21: ("lectures/21-study.html", "lectures/21.html")}
 
 MODULES = [
     ("Algorithm Foundations", [
@@ -106,14 +106,14 @@ PAGE = f"""<!doctype html>
 <link rel="stylesheet" href="assets/site.css?v=2"><script src="assets/site.js?v=2" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap nav"><a class="brand" href="#home"><span>DP</span><span>Problem Driven Programming<small>R1UC544B · COURSE COMPANION</small></span></a>
-<nav class="navlinks" aria-label="Main navigation"><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="lectures/20-study.html">Open Lecture 20</a></nav></div></header>
+<nav class="navlinks" aria-label="Main navigation"><a href="#lectures">Lectures</a><a href="#format">How a lecture works</a><a href="#lab">Try it</a><a href="#resources">Resources</a><a class="nav-cta" href="lectures/21-study.html">Open Lecture 21</a></nav></div></header>
 <main id="main">
 <div class="hero" id="home"><div class="wrap hero-grid"><div>
 <p class="kicker">R1UC544B · Problem Driven Programming</p>
 <h1>Start with a problem.<br>Discover the algorithm.</h1>
 <p>Each lecture opens with a concrete problem you can attempt on paper, lets you find the technique by trying it, and only then states the theory, the code and the complexity. It covers the R1UC544B syllabus from algorithm analysis to dynamic programming.</p>
 <p class="hero-meta">You need: one programming language (C++, Java or Python), arrays, functions and basic recursion.</p>
-<div class="actions"><a class="btn" href="lectures/20-study.html">Study Lecture 20 →</a><a class="btn secondary" href="lectures/20.html">Lecture 20 class view</a></div></div>
+<div class="actions"><a class="btn" href="lectures/21-study.html">Study Lecture 21 →</a><a class="btn secondary" href="lectures/21.html">Lecture 21 class view</a></div></div>
 <div class="visual">{HERO_SVG}<div class="visual-caption">From Lecture 19: the same subproblem, F(3), solved twice.</div></div></div></div>
 <div class="stats"><div class="wrap stat-grid">
 <div class="stat"><strong>{LIVE} of {TOTAL}</strong><span>Lectures published</span></div>
@@ -126,7 +126,7 @@ PAGE = f"""<!doctype html>
 <p class="result-count" id="result-count" aria-live="polite"></p>
 <div id="catalog">{catalog()}</div><p class="empty" id="catalog-empty" hidden>No matching lectures. Try another keyword.</p></section>
 <section id="format" aria-labelledby="format-h"><p class="kicker">02 / How a lecture works</p><h2 id="format-h">One problem, six steps</h2>
-<p class="section-intro">Every published lecture follows the same order, so students always know what comes next. Lecture 19 builds DP intuition; Lecture 20 derives a minimum-energy jump recurrence, then compares memoization, tabulation and rolling storage.</p>
+<p class="section-intro">Every published lecture follows the same order, so students always know what comes next. Lecture 19 builds DP intuition; Lecture 20 derives a minimum-energy jump recurrence, then compares memoization, tabulation and rolling storage. Lecture 21 develops two-dimensional 0/1 Knapsack, including item reconstruction and memory optimization.</p>
 <ol class="flow">
 <li class="card"><span class="number">01</span><h3>Problem</h3><p>A concrete question to try before any definition.</p></li>
 <li class="card"><span class="number">02</span><h3>Discover</h3><p>Brute force first, then an interactive lab shows where it wastes work.</p></li>
@@ -142,7 +142,7 @@ PAGE = f"""<!doctype html>
 <div class="card demo"><div><span class="tag focus">From Lecture 19</span><h3 style="margin-top:9px">Reuse the last two answers</h3><p>Start from the base cases F(0) and F(1). Each new value needs only the two values already in the table, so nothing is computed twice. <a href="lectures/20-study.html#tab">Lecture 20</a> turns this idea into a complete design process.</p>
 <div class="demo-controls"><button id="reset" type="button">Reset</button><button id="prev" type="button">Previous</button><button class="primary" id="play" type="button" aria-pressed="false">Play</button><button id="next" type="button">Next</button></div></div>
 <div><div id="cells" class="cells" aria-label="Fibonacci table"></div><p id="demo-status" class="demo-status" aria-live="polite">Enable JavaScript to step through the table.</p></div></div>
-<p class="note">Lecture 19 has four full labs: a recursion tree, a bottom-up table, a work-count comparison and a greedy-versus-DP coin table. <a href="lectures/19-study.html#discover">Open the recursion tree lab</a>. Lecture 20 has three linked labs: <a href="lectures/20-study.html#memo">memoization</a>, <a href="lectures/20-study.html#tab">tabulation</a> and <a href="lectures/20-study.html#rolling">rolling state</a>.</p></section>
+<p class="note">Lecture 19 has four full labs: a recursion tree, a bottom-up table, a work-count comparison and a greedy-versus-DP coin table. <a href="lectures/19-study.html#discover">Open the recursion tree lab</a>. Lecture 20 has three linked labs: <a href="lectures/20-study.html#memo">memoization</a>, <a href="lectures/20-study.html#tab">tabulation</a> and <a href="lectures/20-study.html#rolling">rolling state</a>. Lecture 21 builds a <a href="lectures/21-study.html#table">2D knapsack table</a> and explores <a href="lectures/21-study.html#rolling">capacity loop direction</a>.</p></section>
 <section id="resources" aria-labelledby="resources-h"><p class="kicker">04 / Further learning</p><h2 id="resources-h">Where to go next</h2>
 <p class="section-intro">Outside resources that pair well with specific lectures. Course pages are written independently of them.</p>
 <div class="cards resources">
