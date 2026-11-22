@@ -2,7 +2,7 @@
 /* Self-checking DP tables: <div class="table-check" data-answers="0,1,2,..." data-coins="1,3,4">
    with one <input> per unknown cell. Marks each cell, gives a targeted hint for the first wrong cell. */
 (() => {
-  for (const box of document.querySelectorAll(".table-check")) {
+  for (const box of document.querySelectorAll(".table-check[data-answers][data-coins]")) {
     const answers = box.dataset.answers.split(",").map(Number),
       coins = box.dataset.coins.split(",").map(Number),
       inputs = [...box.querySelectorAll("input[data-cell]")],
@@ -19,6 +19,7 @@
         const filled = inp.value.trim() !== "", ok = filled && Number(inp.value) === answers[+inp.dataset.cell];
         inp.classList.toggle("tc-ok", ok);
         inp.classList.toggle("tc-bad", filled && !ok);
+        inp.setAttribute("aria-invalid",String(filled&&!ok));
         if (ok) right++;
       }
       if (right === inputs.length) {
@@ -46,6 +47,7 @@
       for (const inp of inputs) {
         inp.value = "";
         inp.classList.remove("tc-ok", "tc-bad");
+        inp.removeAttribute("aria-invalid");
       }
       feedback.hidden = true;
     });
